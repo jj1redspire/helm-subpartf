@@ -3,21 +3,23 @@ import './index.css'
 
 // ── Design tokens ──────────────────────────────────────────
 const C = {
-  bg:          '#F8F9FA',
-  bgAlt:       '#FFFFFF',
-  border:      '#E8EAED',
-  navy:        '#0A1628',
-  navyLight:   '#1A2E4A',
-  body:        '#2D3436',
-  muted:       '#636E72',
-  faint:       '#9BA3A8',
-  amber:       '#E67E22',
-  amberLight:  '#FEF3E2',
-  amberBorder: '#F5C97A',
-  slate:       '#74859A',
-  slateBg:     '#F0F3F7',
-  cardShadow:  '0 1px 3px rgba(10,22,40,0.08), 0 4px 16px rgba(10,22,40,0.06)',
-  navyBg:      '#EEF2F8',
+  bg:          '#0d1117',
+  bgAlt:       '#010409',
+  bgCard:      '#161b22',
+  border:      '#21262d',
+  borderMid:   '#30363d',
+  heading:     '#e6edf3',
+  body:        '#c9d1d9',
+  muted:       '#8b949e',
+  faint:       '#656d76',
+  navyAccent:  '#4493f8',
+  navyBadge:   'rgba(68,147,248,0.12)',
+  amber:       '#d29922',
+  amberLight:  'rgba(210,153,34,0.08)',
+  amberBorder: 'rgba(210,153,34,0.28)',
+  amberText:   '#d29922',
+  slateBg:     '#161b22',
+  cardShadow:  '0 1px 3px rgba(0,0,0,0.3), 0 4px 16px rgba(0,0,0,0.2)',
 }
 
 // ── Live countdown to July 16, 2027 ────────────────────────
@@ -85,13 +87,12 @@ const REFERENCES = [
 // ── Shared style helpers ────────────────────────────────────
 const sectionLabel = {
   fontSize: 12, fontWeight: 700, letterSpacing: '0.12em',
-  textTransform: 'uppercase', color: C.slate, marginBottom: 14,
+  textTransform: 'uppercase', color: C.faint, marginBottom: 14,
 }
 const h2Style = {
   fontSize: 'clamp(26px, 3.5vw, 36px)', fontWeight: 700,
-  color: C.navy, margin: '0 0 16px', letterSpacing: '-0.5px', lineHeight: 1.2,
+  color: C.heading, margin: '0 0 16px', letterSpacing: '-0.5px', lineHeight: 1.2,
 }
-const bodyText = { fontSize: 18, color: C.body, lineHeight: 1.75 }
 const mutedText = { fontSize: 18, color: C.muted, lineHeight: 1.75 }
 
 export default function App() {
@@ -106,17 +107,17 @@ export default function App() {
         padding: '0 32px', height: 56,
         display: 'flex', alignItems: 'center', justifyContent: 'space-between',
         position: 'sticky', top: 0,
-        background: 'rgba(248,249,250,0.96)', backdropFilter: 'blur(8px)',
+        background: 'rgba(13,17,23,0.95)', backdropFilter: 'blur(8px)',
         zIndex: 100,
       }}>
-        <span style={{ fontWeight: 800, fontSize: 15, letterSpacing: '-0.3px', color: C.navy }}>
-          ⚓ HELM <span style={{ color: C.slate, fontWeight: 400, fontSize: 14 }}>/ Subpart F Guide</span>
+        <span style={{ fontWeight: 800, fontSize: 15, letterSpacing: '-0.3px', color: C.heading }}>
+          ⚓ HELM <span style={{ color: C.faint, fontWeight: 400, fontSize: 14 }}>/ Subpart F Guide</span>
         </span>
         <a href="https://helmport.com" target="_blank" rel="noopener noreferrer"
           style={{
-            fontSize: 13, color: C.navy, textDecoration: 'none',
-            border: `1px solid ${C.border}`, padding: '6px 16px', borderRadius: 6,
-            background: C.bgAlt, fontWeight: 500,
+            fontSize: 13, color: C.muted, textDecoration: 'none',
+            border: `1px solid ${C.borderMid}`, padding: '6px 16px', borderRadius: 6,
+            fontWeight: 500,
           }}>
           helmport.com →
         </a>
@@ -125,24 +126,25 @@ export default function App() {
       {/* ══════════════════════════════════════════
           1. HERO
       ══════════════════════════════════════════ */}
-      <section style={{ background: C.bgAlt, borderBottom: `1px solid ${C.border}`, padding: '80px 32px 72px' }}>
+      <section style={{ background: C.bg, borderBottom: `1px solid ${C.border}`, padding: '80px 32px 72px' }}>
         <div style={{ maxWidth: 860, margin: '0 auto' }}>
 
           <div style={{
-            display: 'inline-block', background: C.navyBg, borderRadius: 4,
-            padding: '5px 14px', fontSize: 12, color: C.navy,
+            display: 'inline-block', background: C.navyBadge,
+            border: `1px solid ${C.borderMid}`, borderRadius: 4,
+            padding: '5px 14px', fontSize: 12, color: C.navyAccent,
             letterSpacing: '0.08em', textTransform: 'uppercase', marginBottom: 32,
-            fontWeight: 700, border: `1px solid ${C.border}`,
+            fontWeight: 700,
           }}>
             33 CFR Part 101 · Subpart F · Enforceable July 16, 2025
           </div>
 
           <h1 style={{
             fontSize: 'clamp(32px, 4.5vw, 52px)', fontWeight: 800,
-            lineHeight: 1.15, letterSpacing: '-1px', color: C.navy, margin: '0 0 24px',
+            lineHeight: 1.15, letterSpacing: '-1px', color: C.heading, margin: '0 0 24px',
           }}>
             USCG Subpart F Cybersecurity Rule:<br />
-            <span style={{ color: C.slate, fontWeight: 600 }}>What Every MTSA Facility Needs to Know</span>
+            <span style={{ color: C.muted, fontWeight: 600 }}>What Every MTSA Facility Needs to Know</span>
           </h1>
 
           <p style={{ ...mutedText, maxWidth: 660, margin: '0 0 56px' }}>
@@ -155,18 +157,18 @@ export default function App() {
 
             {/* Passed */}
             <div style={{
-              background: C.slateBg, border: `1px solid ${C.border}`,
-              borderLeft: `4px solid ${C.slate}`, borderRadius: 10, padding: '24px 28px',
+              background: C.bgCard, border: `1px solid ${C.borderMid}`,
+              borderLeft: `4px solid ${C.faint}`, borderRadius: 10, padding: '24px 28px',
               boxShadow: C.cardShadow,
             }}>
-              <div style={{ fontSize: 11, fontWeight: 700, letterSpacing: '0.1em', textTransform: 'uppercase', color: C.slate, marginBottom: 10 }}>
+              <div style={{ fontSize: 11, fontWeight: 700, letterSpacing: '0.1em', textTransform: 'uppercase', color: C.faint, marginBottom: 10 }}>
                 ✓ Deadline Passed
               </div>
-              <div style={{ fontSize: 17, fontWeight: 700, color: C.navy, marginBottom: 4 }}>
+              <div style={{ fontSize: 17, fontWeight: 700, color: C.heading, marginBottom: 4 }}>
                 §101.650 Personnel Training
               </div>
               <div style={{ fontSize: 15, color: C.muted, marginBottom: 12 }}>Due January 12, 2026</div>
-              <p style={{ fontSize: 14, color: C.muted, lineHeight: 1.65, margin: 0 }}>
+              <p style={{ fontSize: 14, color: C.faint, lineHeight: 1.65, margin: 0 }}>
                 All personnel with cybersecurity responsibilities must have completed training.
                 If you haven't, you are already out of compliance.
               </p>
@@ -174,14 +176,14 @@ export default function App() {
 
             {/* Upcoming */}
             <div style={{
-              background: C.amberLight, border: `1px solid ${C.amberBorder}`,
+              background: C.bgCard, border: `1px solid ${C.borderMid}`,
               borderLeft: `4px solid ${C.amber}`, borderRadius: 10, padding: '24px 28px',
               boxShadow: C.cardShadow,
             }}>
               <div style={{ fontSize: 11, fontWeight: 700, letterSpacing: '0.1em', textTransform: 'uppercase', color: C.amber, marginBottom: 10 }}>
                 ⚠ Upcoming Deadline
               </div>
-              <div style={{ fontSize: 17, fontWeight: 700, color: C.navy, marginBottom: 4 }}>
+              <div style={{ fontSize: 17, fontWeight: 700, color: C.heading, marginBottom: 4 }}>
                 Cybersecurity Plan Submission
               </div>
               <div style={{ fontSize: 15, color: C.muted, marginBottom: 12 }}>Due July 16, 2027</div>
@@ -201,14 +203,14 @@ export default function App() {
       {/* ══════════════════════════════════════════
           2. WHAT IS SUBPART F
       ══════════════════════════════════════════ */}
-      <section style={{ background: C.bg, borderBottom: `1px solid ${C.border}`, padding: '80px 32px' }}>
+      <section style={{ background: C.bgAlt, borderBottom: `1px solid ${C.border}`, padding: '80px 32px' }}>
         <div style={{ maxWidth: 860, margin: '0 auto' }}>
           <div style={sectionLabel}>Background</div>
           <h2 style={h2Style}>What Is 33 CFR Part 101, Subpart F?</h2>
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(250px, 1fr))', gap: 40, marginTop: 48 }}>
 
             <div>
-              <div style={{ fontSize: 12, fontWeight: 700, color: C.navy, textTransform: 'uppercase', letterSpacing: '0.1em', marginBottom: 12 }}>The Rule</div>
+              <div style={{ fontSize: 12, fontWeight: 700, color: C.muted, textTransform: 'uppercase', letterSpacing: '0.1em', marginBottom: 12 }}>The Rule</div>
               <p style={mutedText}>
                 On July 16, 2025, the USCG Cybersecurity Final Rule added Subpart F to 33 CFR
                 Part 101, requiring all MTSA-regulated facilities to implement mandatory
@@ -218,7 +220,7 @@ export default function App() {
             </div>
 
             <div>
-              <div style={{ fontSize: 12, fontWeight: 700, color: C.navy, textTransform: 'uppercase', letterSpacing: '0.1em', marginBottom: 12 }}>Who It Applies To</div>
+              <div style={{ fontSize: 12, fontWeight: 700, color: C.muted, textTransform: 'uppercase', letterSpacing: '0.1em', marginBottom: 12 }}>Who It Applies To</div>
               <p style={mutedText}>
                 Approximately 3,200 MTSA-regulated facilities nationwide, including petroleum
                 terminals, chemical plants, LNG terminals, cruise terminals, container terminals,
@@ -227,7 +229,7 @@ export default function App() {
             </div>
 
             <div>
-              <div style={{ fontSize: 12, fontWeight: 700, color: C.navy, textTransform: 'uppercase', letterSpacing: '0.1em', marginBottom: 12 }}>What Changed</div>
+              <div style={{ fontSize: 12, fontWeight: 700, color: C.muted, textTransform: 'uppercase', letterSpacing: '0.1em', marginBottom: 12 }}>What Changed</div>
               <p style={mutedText}>
                 Cybersecurity went from voluntary guidance (NVIC 01-20) to mandatory, enforceable
                 regulation with USCG inspection authority and civil penalty exposure. Non-compliance
@@ -242,7 +244,7 @@ export default function App() {
       {/* ══════════════════════════════════════════
           3. THE TWO DEADLINES
       ══════════════════════════════════════════ */}
-      <section style={{ background: C.bgAlt, borderBottom: `1px solid ${C.border}`, padding: '80px 32px' }}>
+      <section style={{ background: C.bg, borderBottom: `1px solid ${C.border}`, padding: '80px 32px' }}>
         <div style={{ maxWidth: 860, margin: '0 auto' }}>
           <div style={sectionLabel}>Compliance Timeline</div>
           <h2 style={h2Style}>The Two Deadlines Every FSO Must Know</h2>
@@ -251,23 +253,23 @@ export default function App() {
 
             {/* Deadline 1 — passed */}
             <div style={{
-              background: C.slateBg, border: `1px solid ${C.border}`, borderRadius: 10,
+              background: C.bgCard, border: `1px solid ${C.border}`, borderRadius: 10,
               padding: '32px 36px', display: 'grid', gridTemplateColumns: 'auto 1fr',
               gap: 32, alignItems: 'start', boxShadow: C.cardShadow,
             }}>
               <div style={{ textAlign: 'center', minWidth: 88 }}>
-                <div style={{ fontSize: 11, fontWeight: 700, color: C.slate, textTransform: 'uppercase', letterSpacing: '0.08em', marginBottom: 4 }}>Jan 12</div>
-                <div style={{ fontSize: 32, fontWeight: 800, color: C.slate, lineHeight: 1 }}>2026</div>
+                <div style={{ fontSize: 11, fontWeight: 700, color: C.faint, textTransform: 'uppercase', letterSpacing: '0.08em', marginBottom: 4 }}>Jan 12</div>
+                <div style={{ fontSize: 32, fontWeight: 800, color: C.faint, lineHeight: 1 }}>2026</div>
                 <div style={{
                   marginTop: 10, display: 'inline-block',
                   background: C.bg, border: `1px solid ${C.border}`,
                   borderRadius: 4, padding: '3px 9px',
-                  fontSize: 10, color: C.slate, fontWeight: 700,
+                  fontSize: 10, color: C.faint, fontWeight: 700,
                   textTransform: 'uppercase', letterSpacing: '0.08em',
                 }}>Passed</div>
               </div>
               <div>
-                <h3 style={{ fontSize: 20, fontWeight: 700, color: C.navy, margin: '0 0 10px' }}>
+                <h3 style={{ fontSize: 20, fontWeight: 700, color: C.heading, margin: '0 0 10px' }}>
                   Personnel Training — §101.650
                 </h3>
                 <p style={{ ...mutedText, margin: 0 }}>
@@ -281,7 +283,7 @@ export default function App() {
 
             {/* Deadline 2 — upcoming */}
             <div style={{
-              background: C.amberLight, border: `1px solid ${C.amberBorder}`,
+              background: C.bgCard, border: `1px solid ${C.borderMid}`,
               borderLeft: `4px solid ${C.amber}`, borderRadius: 10,
               padding: '32px 36px', display: 'grid', gridTemplateColumns: 'auto 1fr',
               gap: 32, alignItems: 'start', boxShadow: C.cardShadow,
@@ -291,14 +293,14 @@ export default function App() {
                 <div style={{ fontSize: 32, fontWeight: 800, color: C.amber, lineHeight: 1 }}>2027</div>
                 <div style={{
                   marginTop: 10, display: 'inline-block',
-                  background: 'rgba(230,126,34,0.12)', border: `1px solid ${C.amberBorder}`,
+                  background: C.amberLight, border: `1px solid ${C.amberBorder}`,
                   borderRadius: 4, padding: '3px 9px',
                   fontSize: 10, color: C.amber, fontWeight: 700,
                   textTransform: 'uppercase', letterSpacing: '0.08em',
                 }}>{daysLeft}d left</div>
               </div>
               <div>
-                <h3 style={{ fontSize: 20, fontWeight: 700, color: C.navy, margin: '0 0 10px' }}>
+                <h3 style={{ fontSize: 20, fontWeight: 700, color: C.heading, margin: '0 0 10px' }}>
                   Cybersecurity Plan Submission — §101.640
                 </h3>
                 <p style={{ ...mutedText, margin: '0 0 16px' }}>
@@ -307,9 +309,9 @@ export default function App() {
                   clearing the USCG review cycle — takes 12 to 18 months.
                 </p>
                 <div style={{
-                  background: 'rgba(230,126,34,0.08)', border: `1px solid ${C.amberBorder}`,
+                  background: C.amberLight, border: `1px solid ${C.amberBorder}`,
                   borderRadius: 8, padding: '12px 16px',
-                  fontSize: 15, color: '#B45309', lineHeight: 1.65, fontWeight: 500,
+                  fontSize: 15, color: C.amber, lineHeight: 1.65, fontWeight: 500,
                 }}>
                   Facilities that haven't begun their Cybersecurity Assessment are running out of
                   planning runway. The clock started July 2025.
@@ -324,7 +326,7 @@ export default function App() {
       {/* ══════════════════════════════════════════
           4. WHAT THE PLAN MUST COVER
       ══════════════════════════════════════════ */}
-      <section style={{ background: C.bg, borderBottom: `1px solid ${C.border}`, padding: '80px 32px' }}>
+      <section style={{ background: C.bgAlt, borderBottom: `1px solid ${C.border}`, padding: '80px 32px' }}>
         <div style={{ maxWidth: 960, margin: '0 auto' }}>
           <div style={sectionLabel}>Requirements</div>
           <h2 style={h2Style}>What the Cybersecurity Plan Must Cover</h2>
@@ -332,19 +334,20 @@ export default function App() {
             Seven compliance areas required under 33 CFR Part 101, Subpart F.
           </p>
 
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(270px, 1fr))', gap: 16 }}>
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(270px, 1fr))', gap: 12 }}>
             {PLAN_SECTIONS.map((s, i) => (
               <article key={i} style={{
-                background: C.bgAlt, border: `1px solid ${C.border}`,
+                background: C.bgCard, border: `1px solid ${C.border}`,
                 borderRadius: 10, padding: '24px 26px', boxShadow: C.cardShadow,
               }}>
                 <div style={{
-                  fontSize: 12, color: C.navy, fontFamily: 'ui-monospace, Consolas, monospace',
+                  fontSize: 12, color: C.navyAccent,
+                  fontFamily: 'ui-monospace, Consolas, monospace',
                   fontWeight: 700, marginBottom: 10, letterSpacing: '0.04em',
-                  background: C.navyBg, display: 'inline-block',
+                  background: C.navyBadge, display: 'inline-block',
                   padding: '3px 8px', borderRadius: 4,
                 }}>{s.ref}</div>
-                <h3 style={{ fontSize: 17, fontWeight: 700, color: C.navy, margin: '10px 0 8px', lineHeight: 1.3 }}>{s.title}</h3>
+                <h3 style={{ fontSize: 17, fontWeight: 700, color: C.heading, margin: '10px 0 8px', lineHeight: 1.3 }}>{s.title}</h3>
                 <p style={{ fontSize: 15, color: C.muted, lineHeight: 1.7, margin: 0 }}>{s.body}</p>
               </article>
             ))}
@@ -355,25 +358,24 @@ export default function App() {
       {/* ══════════════════════════════════════════
           5. KEY REGULATORY REFERENCES
       ══════════════════════════════════════════ */}
-      <section style={{ background: C.bgAlt, borderBottom: `1px solid ${C.border}`, padding: '80px 32px' }}>
+      <section style={{ background: C.bg, borderBottom: `1px solid ${C.border}`, padding: '80px 32px' }}>
         <div style={{ maxWidth: 860, margin: '0 auto' }}>
           <div style={sectionLabel}>Resources</div>
           <h2 style={h2Style}>Key Regulatory References</h2>
           <p style={{ ...mutedText, margin: '0 0 48px' }}>Primary sources for Subpart F compliance.</p>
 
-          <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: 6 }}>
             {REFERENCES.map((r, i) => (
               <div key={i} style={{
-                background: C.bg, border: `1px solid ${C.border}`, borderRadius: 8,
+                background: C.bgCard, border: `1px solid ${C.border}`, borderRadius: 8,
                 padding: '18px 22px', display: 'flex', gap: 16, alignItems: 'flex-start',
-                boxShadow: '0 1px 2px rgba(10,22,40,0.04)',
               }}>
                 <div style={{
-                  width: 7, height: 7, borderRadius: '50%',
-                  background: C.navy, marginTop: 8, flexShrink: 0, opacity: 0.25,
+                  width: 6, height: 6, borderRadius: '50%',
+                  background: C.borderMid, marginTop: 9, flexShrink: 0,
                 }} />
                 <div>
-                  <div style={{ fontSize: 16, fontWeight: 700, color: C.navy, marginBottom: 4 }}>{r.title}</div>
+                  <div style={{ fontSize: 16, fontWeight: 700, color: C.heading, marginBottom: 4 }}>{r.title}</div>
                   <div style={{ fontSize: 15, color: C.muted, lineHeight: 1.65 }}>{r.desc}</div>
                 </div>
               </div>
@@ -385,19 +387,20 @@ export default function App() {
       {/* ══════════════════════════════════════════
           6. WHO WE ARE
       ══════════════════════════════════════════ */}
-      <section style={{ background: C.navy, padding: '80px 32px' }}>
+      <section style={{ background: C.bgAlt, borderBottom: `1px solid ${C.border}`, padding: '80px 32px' }}>
         <div style={{ maxWidth: 640, margin: '0 auto', textAlign: 'center' }}>
-          <div style={{ fontSize: 22, fontWeight: 800, color: '#FFFFFF', marginBottom: 16 }}>⚓ HELM</div>
-          <p style={{ fontSize: 18, color: 'rgba(255,255,255,0.7)', lineHeight: 1.75, margin: '0 0 32px' }}>
+          <div style={{ fontSize: 22, fontWeight: 800, color: C.heading, marginBottom: 16 }}>⚓ HELM</div>
+          <p style={{ ...mutedText, margin: '0 0 32px' }}>
             HELM helps Facility Security Officers at MTSA-regulated facilities manage both
             physical security and cybersecurity compliance in one platform — from FSP tracking
             to Subpart F plan development.
           </p>
           <a href="https://helmport.com" target="_blank" rel="noopener noreferrer"
             style={{
-              display: 'inline-block', background: C.amber, color: '#FFFFFF',
-              textDecoration: 'none', padding: '13px 32px', borderRadius: 8,
-              fontSize: 15, fontWeight: 700, letterSpacing: '-0.1px',
+              display: 'inline-block', background: C.bgCard,
+              border: `1px solid ${C.borderMid}`, color: C.heading,
+              textDecoration: 'none', padding: '12px 28px', borderRadius: 8,
+              fontSize: 15, fontWeight: 600,
             }}>
             Visit helmport.com →
           </a>
@@ -407,17 +410,17 @@ export default function App() {
       {/* ══════════════════════════════════════════
           7. FOOTER
       ══════════════════════════════════════════ */}
-      <footer style={{ background: '#0A1628', borderTop: '1px solid rgba(255,255,255,0.06)', padding: '28px 32px' }}>
+      <footer style={{ background: C.bgAlt, borderTop: `1px solid ${C.border}`, padding: '28px 32px' }}>
         <div style={{
           maxWidth: 860, margin: '0 auto', display: 'flex', flexWrap: 'wrap',
           gap: 16, justifyContent: 'space-between', alignItems: 'center',
         }}>
-          <p style={{ fontSize: 13, color: 'rgba(255,255,255,0.35)', margin: 0, lineHeight: 1.6 }}>
+          <p style={{ fontSize: 13, color: C.faint, margin: 0, lineHeight: 1.6 }}>
             This site is for informational purposes only and does not constitute legal advice.
           </p>
           <div style={{ display: 'flex', gap: 20, alignItems: 'center', flexWrap: 'wrap' }}>
-            <a href="mailto:joel@helmport.com" style={{ fontSize: 13, color: 'rgba(255,255,255,0.45)', textDecoration: 'none' }}>joel@helmport.com</a>
-            <span style={{ fontSize: 13, color: 'rgba(255,255,255,0.35)' }}>© 2026 HELM</span>
+            <a href="mailto:joel@helmport.com" style={{ fontSize: 13, color: C.faint, textDecoration: 'none' }}>joel@helmport.com</a>
+            <span style={{ fontSize: 13, color: C.faint }}>© 2026 HELM</span>
           </div>
         </div>
       </footer>
