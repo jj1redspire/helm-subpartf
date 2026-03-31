@@ -428,7 +428,109 @@ export default function App() {
       </section>
 
       {/* ══════════════════════════════════════════
-          5. REFERENCES
+          5. COST COMPARISON
+      ══════════════════════════════════════════ */}
+      <section id="cost" style={{ background: C.bg, borderBottom: `1px solid ${C.border}`, padding: '80px 32px' }}>
+        <div style={{ maxWidth: 1000, margin: '0 auto' }}>
+          <div style={sectionLabel}>ROI Analysis</div>
+          <h2 style={h2Style}>What Subpart F Compliance Actually Costs</h2>
+          <p style={{ ...mutedText, margin: '0 0 48px' }}>Three ways to get through the checklist above. One costs 95% less.</p>
+
+          {/* Three columns */}
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: 16, alignItems: 'stretch', marginBottom: 32 }}>
+
+            {/* DIY */}
+            <div style={{ background: C.bgCard, border: `1px solid ${C.border}`, borderRadius: 12, padding: '28px 26px', display: 'flex', flexDirection: 'column', gap: 16, boxShadow: C.cardShadow }}>
+              <div>
+                <div style={{ fontSize: 12, fontWeight: 700, color: C.faint, textTransform: 'uppercase', letterSpacing: '0.1em', marginBottom: 8 }}>Option 1</div>
+                <h3 style={{ fontSize: 20, fontWeight: 700, color: C.heading, margin: '0 0 4px' }}>DIY / Excel</h3>
+                <div style={{ fontSize: 14, color: C.muted }}>$0 software, but 160+ hours/year of your time</div>
+              </div>
+              <div style={{ background: C.bg, borderRadius: 8, padding: '14px 16px' }}>
+                <div style={{ fontSize: 12, fontWeight: 700, color: C.faint, textTransform: 'uppercase', letterSpacing: '0.08em', marginBottom: 4 }}>True Annual Cost</div>
+                <div style={{ fontSize: 22, fontWeight: 800, color: C.body }}>$13,600<span style={{ fontSize: 13, color: C.muted, fontWeight: 400 }}>/yr in labor</span></div>
+                <div style={{ fontSize: 12, color: C.faint, marginTop: 2 }}>160 hrs × $85/hr FSO salary</div>
+              </div>
+              <div>
+                <div style={{ fontSize: 12, fontWeight: 700, color: C.faint, textTransform: 'uppercase', letterSpacing: '0.08em', marginBottom: 6 }}>What You Get</div>
+                <p style={{ fontSize: 14, color: C.muted, lineHeight: 1.65, margin: 0 }}>Spreadsheets, manual cross-referencing, no audit trail, hope you don't miss anything.</p>
+              </div>
+              <div>
+                <div style={{ fontSize: 12, fontWeight: 700, color: C.faint, textTransform: 'uppercase', letterSpacing: '0.08em', marginBottom: 6 }}>Risk</div>
+                <p style={{ fontSize: 14, color: C.muted, lineHeight: 1.65, margin: 0 }}>COTP finds gaps you missed → fines, remediation, reputation damage.</p>
+              </div>
+              <div style={{ marginTop: 'auto', paddingTop: 8 }}>
+                <span style={{ display: 'inline-block', background: C.bg, border: `1px solid ${C.borderMid}`, color: C.muted, fontSize: 12, fontWeight: 700, padding: '5px 12px', borderRadius: 4, letterSpacing: '0.06em', textTransform: 'uppercase' }}>Free but expensive</span>
+              </div>
+            </div>
+
+            {/* Consultant */}
+            <div style={{ background: C.bgCard, border: `1px solid ${C.border}`, borderRadius: 12, padding: '28px 26px', display: 'flex', flexDirection: 'column', gap: 16, boxShadow: C.cardShadow }}>
+              <div>
+                <div style={{ fontSize: 12, fontWeight: 700, color: C.faint, textTransform: 'uppercase', letterSpacing: '0.1em', marginBottom: 8 }}>Option 2</div>
+                <h3 style={{ fontSize: 20, fontWeight: 700, color: C.heading, margin: '0 0 4px' }}>Hire a Consultant</h3>
+                <div style={{ fontSize: 14, color: C.muted }}>$25,000 – $75,000 per facility per year</div>
+              </div>
+              <div style={{ background: C.bg, borderRadius: 8, padding: '14px 16px' }}>
+                <div style={{ fontSize: 12, fontWeight: 700, color: C.faint, textTransform: 'uppercase', letterSpacing: '0.08em', marginBottom: 4 }}>Annual Cost</div>
+                <div style={{ fontSize: 22, fontWeight: 800, color: C.body }}>$25k–$75k<span style={{ fontSize: 13, color: C.muted, fontWeight: 400 }}>/facility/yr</span></div>
+              </div>
+              <div>
+                <div style={{ fontSize: 12, fontWeight: 700, color: C.faint, textTransform: 'uppercase', letterSpacing: '0.08em', marginBottom: 6 }}>What You Get</div>
+                <p style={{ fontSize: 14, color: C.muted, lineHeight: 1.65, margin: 0 }}>Expert walks your facility, writes your FSA/FSP cyber annex, manages COTP submission.</p>
+              </div>
+              <div>
+                <div style={{ fontSize: 12, fontWeight: 700, color: C.faint, textTransform: 'uppercase', letterSpacing: '0.08em', marginBottom: 6 }}>Limitation</div>
+                <p style={{ fontSize: 14, color: C.muted, lineHeight: 1.65, margin: 0 }}>You're renting expertise. When the engagement ends, you're back to spreadsheets.</p>
+              </div>
+              <div style={{ marginTop: 'auto', paddingTop: 8 }}>
+                <span style={{ display: 'inline-block', background: C.bg, border: `1px solid ${C.borderMid}`, color: C.muted, fontSize: 12, fontWeight: 700, padding: '5px 12px', borderRadius: 4, letterSpacing: '0.06em', textTransform: 'uppercase' }}>Expert but expensive</span>
+              </div>
+            </div>
+
+            {/* HELM — highlighted column */}
+            <div style={{ background: C.bgCard, border: `2px solid ${C.amber}`, borderRadius: 12, padding: '28px 26px', display: 'flex', flexDirection: 'column', gap: 16, boxShadow: `0 0 0 1px ${C.amberBorder}, ${C.cardShadow}`, position: 'relative' }}>
+              <div style={{ position: 'absolute', top: -12, left: 24, background: C.amber, color: '#fff', fontSize: 11, fontWeight: 800, letterSpacing: '0.1em', textTransform: 'uppercase', padding: '4px 14px', borderRadius: 4 }}>Recommended</div>
+              <div>
+                <div style={{ fontSize: 12, fontWeight: 700, color: C.amber, textTransform: 'uppercase', letterSpacing: '0.1em', marginBottom: 8 }}>Option 3</div>
+                <h3 style={{ fontSize: 20, fontWeight: 700, color: C.heading, margin: '0 0 4px' }}>HELM</h3>
+                <div style={{ fontSize: 14, color: C.muted }}>$99/month · built for MTSA facilities</div>
+              </div>
+              <div style={{ background: C.amberLight, border: `1px solid ${C.amberBorder}`, borderRadius: 8, padding: '14px 16px' }}>
+                <div style={{ fontSize: 12, fontWeight: 700, color: C.amber, textTransform: 'uppercase', letterSpacing: '0.08em', marginBottom: 4 }}>Annual Cost</div>
+                <div style={{ fontSize: 22, fontWeight: 800, color: C.amber }}>$1,188<span style={{ fontSize: 13, color: C.muted, fontWeight: 400 }}>/facility/yr</span></div>
+                <div style={{ fontSize: 12, color: C.faint, marginTop: 2 }}>vs. $25,000+ consultant — 95% less</div>
+              </div>
+              <div>
+                <div style={{ fontSize: 12, fontWeight: 700, color: C.faint, textTransform: 'uppercase', letterSpacing: '0.08em', marginBottom: 6 }}>What You Get</div>
+                <p style={{ fontSize: 14, color: C.muted, lineHeight: 1.65, margin: 0 }}>Automated compliance tracking for all 14 checklist items above. Gap analysis, training tracker, drill logging, incident reporting, inspection package PDF, AI compliance assistant — built specifically for MTSA facilities.</p>
+              </div>
+              <div>
+                <div style={{ fontSize: 12, fontWeight: 700, color: C.faint, textTransform: 'uppercase', letterSpacing: '0.08em', marginBottom: 6 }}>Best For</div>
+                <p style={{ fontSize: 14, color: C.muted, lineHeight: 1.65, margin: 0 }}>FSOs who want to own their compliance posture without paying consultant rates for spreadsheet work.</p>
+              </div>
+              <div style={{ marginTop: 'auto', paddingTop: 8, display: 'flex', flexDirection: 'column', gap: 10 }}>
+                <span style={{ display: 'inline-block', background: C.amberLight, border: `1px solid ${C.amberBorder}`, color: C.amber, fontSize: 12, fontWeight: 700, padding: '5px 12px', borderRadius: 4, letterSpacing: '0.06em', textTransform: 'uppercase' }}>Complete platform, 95% less</span>
+                <a href="https://helmport.com/signup" target="_blank" rel="noopener noreferrer"
+                  style={{ display: 'block', textAlign: 'center', background: C.amber, color: '#fff', textDecoration: 'none', padding: '12px 20px', borderRadius: 8, fontSize: 15, fontWeight: 700 }}>
+                  Start Free Trial → helmport.com/signup
+                </a>
+              </div>
+            </div>
+
+          </div>
+
+          {/* Savings Calculator embedded here */}
+          <SavingsCalculator />
+
+          <p style={{ fontSize: 14, color: C.faint, marginTop: 28, lineHeight: 1.75, fontStyle: 'italic', maxWidth: 780 }}>
+            HELM doesn't replace on-site expertise. If your facility needs a consultant for physical walkthroughs or complex OT assessments, HELM makes that engagement faster and cheaper by handling the documentation, tracking, and reporting.
+          </p>
+        </div>
+      </section>
+
+      {/* ══════════════════════════════════════════
+          6. REFERENCES
       ══════════════════════════════════════════ */}
       <section id="references" style={{ background: C.bg, borderBottom: `1px solid ${C.border}`, padding: '80px 32px' }}>
         <div style={{ maxWidth: 860, margin: '0 auto' }}>
@@ -598,108 +700,6 @@ export default function App() {
             ))}
           </div>
           <p style={{ fontSize: 12, color: C.faint, marginTop: 24, fontStyle: 'italic' }}>Source: NVIC 01-20, Enclosure 1, February 26, 2020</p>
-        </div>
-      </section>
-
-      {/* ══════════════════════════════════════════
-          11. COST COMPARISON
-      ══════════════════════════════════════════ */}
-      <section id="cost" style={{ background: C.bg, borderBottom: `1px solid ${C.border}`, padding: '80px 32px' }}>
-        <div style={{ maxWidth: 1000, margin: '0 auto' }}>
-          <div style={sectionLabel}>ROI Analysis</div>
-          <h2 style={h2Style}>What Subpart F Compliance Actually Costs</h2>
-          <p style={{ ...mutedText, margin: '0 0 48px' }}>Three ways to get through the checklist above. One costs 95% less.</p>
-
-          {/* Three columns */}
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: 16, alignItems: 'stretch', marginBottom: 32 }}>
-
-            {/* DIY */}
-            <div style={{ background: C.bgCard, border: `1px solid ${C.border}`, borderRadius: 12, padding: '28px 26px', display: 'flex', flexDirection: 'column', gap: 16, boxShadow: C.cardShadow }}>
-              <div>
-                <div style={{ fontSize: 12, fontWeight: 700, color: C.faint, textTransform: 'uppercase', letterSpacing: '0.1em', marginBottom: 8 }}>Option 1</div>
-                <h3 style={{ fontSize: 20, fontWeight: 700, color: C.heading, margin: '0 0 4px' }}>DIY / Excel</h3>
-                <div style={{ fontSize: 14, color: C.muted }}>$0 software, but 160+ hours/year of your time</div>
-              </div>
-              <div style={{ background: C.bg, borderRadius: 8, padding: '14px 16px' }}>
-                <div style={{ fontSize: 12, fontWeight: 700, color: C.faint, textTransform: 'uppercase', letterSpacing: '0.08em', marginBottom: 4 }}>True Annual Cost</div>
-                <div style={{ fontSize: 22, fontWeight: 800, color: C.body }}>$13,600<span style={{ fontSize: 13, color: C.muted, fontWeight: 400 }}>/yr in labor</span></div>
-                <div style={{ fontSize: 12, color: C.faint, marginTop: 2 }}>160 hrs × $85/hr FSO salary</div>
-              </div>
-              <div>
-                <div style={{ fontSize: 12, fontWeight: 700, color: C.faint, textTransform: 'uppercase', letterSpacing: '0.08em', marginBottom: 6 }}>What You Get</div>
-                <p style={{ fontSize: 14, color: C.muted, lineHeight: 1.65, margin: 0 }}>Spreadsheets, manual cross-referencing, no audit trail, hope you don't miss anything.</p>
-              </div>
-              <div>
-                <div style={{ fontSize: 12, fontWeight: 700, color: C.faint, textTransform: 'uppercase', letterSpacing: '0.08em', marginBottom: 6 }}>Risk</div>
-                <p style={{ fontSize: 14, color: C.muted, lineHeight: 1.65, margin: 0 }}>COTP finds gaps you missed → fines, remediation, reputation damage.</p>
-              </div>
-              <div style={{ marginTop: 'auto', paddingTop: 8 }}>
-                <span style={{ display: 'inline-block', background: C.bg, border: `1px solid ${C.borderMid}`, color: C.muted, fontSize: 12, fontWeight: 700, padding: '5px 12px', borderRadius: 4, letterSpacing: '0.06em', textTransform: 'uppercase' }}>Free but expensive</span>
-              </div>
-            </div>
-
-            {/* Consultant */}
-            <div style={{ background: C.bgCard, border: `1px solid ${C.border}`, borderRadius: 12, padding: '28px 26px', display: 'flex', flexDirection: 'column', gap: 16, boxShadow: C.cardShadow }}>
-              <div>
-                <div style={{ fontSize: 12, fontWeight: 700, color: C.faint, textTransform: 'uppercase', letterSpacing: '0.1em', marginBottom: 8 }}>Option 2</div>
-                <h3 style={{ fontSize: 20, fontWeight: 700, color: C.heading, margin: '0 0 4px' }}>Hire a Consultant</h3>
-                <div style={{ fontSize: 14, color: C.muted }}>$25,000 – $75,000 per facility per year</div>
-              </div>
-              <div style={{ background: C.bg, borderRadius: 8, padding: '14px 16px' }}>
-                <div style={{ fontSize: 12, fontWeight: 700, color: C.faint, textTransform: 'uppercase', letterSpacing: '0.08em', marginBottom: 4 }}>Annual Cost</div>
-                <div style={{ fontSize: 22, fontWeight: 800, color: C.body }}>$25k–$75k<span style={{ fontSize: 13, color: C.muted, fontWeight: 400 }}>/facility/yr</span></div>
-              </div>
-              <div>
-                <div style={{ fontSize: 12, fontWeight: 700, color: C.faint, textTransform: 'uppercase', letterSpacing: '0.08em', marginBottom: 6 }}>What You Get</div>
-                <p style={{ fontSize: 14, color: C.muted, lineHeight: 1.65, margin: 0 }}>Expert walks your facility, writes your FSA/FSP cyber annex, manages COTP submission.</p>
-              </div>
-              <div>
-                <div style={{ fontSize: 12, fontWeight: 700, color: C.faint, textTransform: 'uppercase', letterSpacing: '0.08em', marginBottom: 6 }}>Limitation</div>
-                <p style={{ fontSize: 14, color: C.muted, lineHeight: 1.65, margin: 0 }}>You're renting expertise. When the engagement ends, you're back to spreadsheets.</p>
-              </div>
-              <div style={{ marginTop: 'auto', paddingTop: 8 }}>
-                <span style={{ display: 'inline-block', background: C.bg, border: `1px solid ${C.borderMid}`, color: C.muted, fontSize: 12, fontWeight: 700, padding: '5px 12px', borderRadius: 4, letterSpacing: '0.06em', textTransform: 'uppercase' }}>Expert but expensive</span>
-              </div>
-            </div>
-
-            {/* HELM — highlighted column */}
-            <div style={{ background: C.bgCard, border: `2px solid ${C.amber}`, borderRadius: 12, padding: '28px 26px', display: 'flex', flexDirection: 'column', gap: 16, boxShadow: `0 0 0 1px ${C.amberBorder}, ${C.cardShadow}`, position: 'relative' }}>
-              <div style={{ position: 'absolute', top: -12, left: 24, background: C.amber, color: '#fff', fontSize: 11, fontWeight: 800, letterSpacing: '0.1em', textTransform: 'uppercase', padding: '4px 14px', borderRadius: 4 }}>Recommended</div>
-              <div>
-                <div style={{ fontSize: 12, fontWeight: 700, color: C.amber, textTransform: 'uppercase', letterSpacing: '0.1em', marginBottom: 8 }}>Option 3</div>
-                <h3 style={{ fontSize: 20, fontWeight: 700, color: C.heading, margin: '0 0 4px' }}>HELM</h3>
-                <div style={{ fontSize: 14, color: C.muted }}>$99/month · built for MTSA facilities</div>
-              </div>
-              <div style={{ background: C.amberLight, border: `1px solid ${C.amberBorder}`, borderRadius: 8, padding: '14px 16px' }}>
-                <div style={{ fontSize: 12, fontWeight: 700, color: C.amber, textTransform: 'uppercase', letterSpacing: '0.08em', marginBottom: 4 }}>Annual Cost</div>
-                <div style={{ fontSize: 22, fontWeight: 800, color: C.amber }}>$1,188<span style={{ fontSize: 13, color: C.muted, fontWeight: 400 }}>/facility/yr</span></div>
-                <div style={{ fontSize: 12, color: C.faint, marginTop: 2 }}>vs. $25,000+ consultant — 95% less</div>
-              </div>
-              <div>
-                <div style={{ fontSize: 12, fontWeight: 700, color: C.faint, textTransform: 'uppercase', letterSpacing: '0.08em', marginBottom: 6 }}>What You Get</div>
-                <p style={{ fontSize: 14, color: C.muted, lineHeight: 1.65, margin: 0 }}>Automated compliance tracking for all 14 checklist items above. Gap analysis, training tracker, drill logging, incident reporting, inspection package PDF, AI compliance assistant — built specifically for MTSA facilities.</p>
-              </div>
-              <div>
-                <div style={{ fontSize: 12, fontWeight: 700, color: C.faint, textTransform: 'uppercase', letterSpacing: '0.08em', marginBottom: 6 }}>Best For</div>
-                <p style={{ fontSize: 14, color: C.muted, lineHeight: 1.65, margin: 0 }}>FSOs who want to own their compliance posture without paying consultant rates for spreadsheet work.</p>
-              </div>
-              <div style={{ marginTop: 'auto', paddingTop: 8, display: 'flex', flexDirection: 'column', gap: 10 }}>
-                <span style={{ display: 'inline-block', background: C.amberLight, border: `1px solid ${C.amberBorder}`, color: C.amber, fontSize: 12, fontWeight: 700, padding: '5px 12px', borderRadius: 4, letterSpacing: '0.06em', textTransform: 'uppercase' }}>Complete platform, 95% less</span>
-                <a href="https://helmport.com/signup" target="_blank" rel="noopener noreferrer"
-                  style={{ display: 'block', textAlign: 'center', background: C.amber, color: '#fff', textDecoration: 'none', padding: '12px 20px', borderRadius: 8, fontSize: 15, fontWeight: 700 }}>
-                  Start Free Trial → helmport.com/signup
-                </a>
-              </div>
-            </div>
-
-          </div>
-
-          {/* Savings Calculator embedded here */}
-          <SavingsCalculator />
-
-          <p style={{ fontSize: 14, color: C.faint, marginTop: 28, lineHeight: 1.75, fontStyle: 'italic', maxWidth: 780 }}>
-            HELM doesn't replace on-site expertise. If your facility needs a consultant for physical walkthroughs or complex OT assessments, HELM makes that engagement faster and cheaper by handling the documentation, tracking, and reporting.
-          </p>
         </div>
       </section>
 
