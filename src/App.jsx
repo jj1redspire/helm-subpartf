@@ -17,54 +17,49 @@ const C = {
   amber:       '#d29922',
   amberLight:  'rgba(210,153,34,0.08)',
   amberBorder: 'rgba(210,153,34,0.28)',
-  // Incident card accent colors
-  icAmber:     '#d29922',  // Cyber Incident
-  icOrange:    '#e67e22',  // Breach of Security
-  icYellow:    '#c9a227',  // Suspicious Activity
-  icRed:       '#da3633',  // TSI
+  green:       '#3fb950',
+  greenLight:  'rgba(63,185,80,0.08)',
+  greenBorder: 'rgba(63,185,80,0.3)',
+  red:         '#da3633',
+  redLight:    'rgba(218,54,51,0.08)',
+  redBorder:   'rgba(218,54,51,0.3)',
+  icAmber:     '#d29922',
+  icOrange:    '#e67e22',
+  icYellow:    '#c9a227',
+  icRed:       '#da3633',
   cardShadow:  '0 1px 3px rgba(0,0,0,0.3), 0 4px 16px rgba(0,0,0,0.2)',
 }
 
-// ── Shared style helpers ────────────────────────────────────
-const sectionLabel = {
-  fontSize: 12, fontWeight: 700, letterSpacing: '0.12em',
-  textTransform: 'uppercase', color: C.faint, marginBottom: 14,
-}
-const h2Style = {
-  fontSize: 'clamp(26px, 3.5vw, 36px)', fontWeight: 700,
-  color: C.heading, margin: '0 0 16px', letterSpacing: '-0.5px', lineHeight: 1.2,
-}
-const mutedText = { fontSize: 18, color: C.muted, lineHeight: 1.75 }
+const sectionLabel = { fontSize: 12, fontWeight: 700, letterSpacing: '0.12em', textTransform: 'uppercase', color: C.faint, marginBottom: 14 }
+const h2Style     = { fontSize: 'clamp(26px, 3.5vw, 36px)', fontWeight: 700, color: C.heading, margin: '0 0 16px', letterSpacing: '-0.5px', lineHeight: 1.2 }
+const mutedText   = { fontSize: 18, color: C.muted, lineHeight: 1.75 }
 
-// ── Navigation sections ────────────────────────────────────
+// ── Section nav ────────────────────────────────────────────
 const NAV_SECTIONS = [
-  { id: 'hero',             label: 'Overview'           },
-  { id: 'what-is',         label: 'What Is Subpart F'  },
-  { id: 'deadlines',       label: 'Deadlines'          },
-  { id: 'plan',            label: 'Plan Requirements'  },
-  { id: 'references',      label: 'References'         },
-  { id: 'training',        label: 'Training'           },
-  { id: 'incident',        label: 'Incident Reporting' },
-  { id: 'faq',             label: 'FAQ'                },
-  { id: 'checklist',       label: 'Checklist'          },
+  { id: 'hero',      label: 'Overview'          },
+  { id: 'what-is',  label: 'What Is Subpart F'  },
+  { id: 'deadlines', label: 'Deadlines'         },
+  { id: 'plan',      label: 'Plan Requirements' },
+  { id: 'references',label: 'References'        },
+  { id: 'training',  label: 'Training'          },
+  { id: 'incident',  label: 'Incident Reporting'},
+  { id: 'faq',       label: 'FAQ'               },
+  { id: 'readiness', label: 'Readiness Score'   },
+  { id: 'checklist', label: 'Checklist'         },
+  { id: 'cost',      label: 'Cost Comparison'   },
 ]
 
-// ── Live countdown to July 16, 2027 ────────────────────────
+// ── Countdown ──────────────────────────────────────────────
 function useCountdown(target) {
   const [days, setDays] = useState(0)
   useEffect(() => {
-    function calc() {
-      const diff = new Date(target) - new Date()
-      setDays(Math.max(0, Math.ceil(diff / (1000 * 60 * 60 * 24))))
-    }
-    calc()
-    const id = setInterval(calc, 60000)
-    return () => clearInterval(id)
+    const calc = () => setDays(Math.max(0, Math.ceil((new Date(target) - new Date()) / 86400000)))
+    calc(); const id = setInterval(calc, 60000); return () => clearInterval(id)
   }, [target])
   return days
 }
 
-// ── Data: existing sections ────────────────────────────────
+// ── Static data ────────────────────────────────────────────
 const PLAN_SECTIONS = [
   { ref: '§101.630', title: 'Cybersecurity Officer (CySO)', body: 'Each facility must designate a qualified Cybersecurity Officer responsible for developing, implementing, and maintaining the Cybersecurity Plan.' },
   { ref: '§101.635', title: 'Cybersecurity Assessment',     body: 'A documented assessment identifying cybersecurity risks across all IT and OT systems, networks, and processes relevant to facility security.' },
@@ -74,284 +69,253 @@ const PLAN_SECTIONS = [
   { ref: '§101.660', title: 'Incident Reporting',           body: 'Cybersecurity incidents must be reported to the National Response Center (NRC) and the cognizant COTP within established timeframes.' },
   { ref: '§101.645', title: 'Plan Review & Audit',          body: 'Annual internal review of the Cybersecurity Plan, with a full resubmission to USCG every five years or after a significant change.' },
 ]
-
 const REFERENCES = [
-  { title: '33 CFR Part 101, Subpart F',             desc: 'The final rule text — mandatory cybersecurity requirements for MTSA facilities' },
-  { title: 'NVIC 01-20',                             desc: 'Guidelines for Addressing Cyber Risks at MTSA Regulated Vessels and Facilities' },
-  { title: 'NVIC 02-24',                             desc: 'Updated cybersecurity guidance for MTSA plan holders' },
-  { title: 'CG-5PC Policy Letter 01-25',             desc: 'USCG implementation guidance for Subpart F compliance' },
+  { title: '33 CFR Part 101, Subpart F',              desc: 'The final rule text — mandatory cybersecurity requirements for MTSA facilities' },
+  { title: 'NVIC 01-20',                              desc: 'Guidelines for Addressing Cyber Risks at MTSA Regulated Vessels and Facilities' },
+  { title: 'NVIC 02-24',                              desc: 'Updated cybersecurity guidance for MTSA plan holders' },
+  { title: 'CG-5PC Policy Letter 01-25',              desc: 'USCG implementation guidance for Subpart F compliance' },
   { title: 'NIST Cybersecurity Framework Maritime Profile', desc: 'Sector-specific application of the NIST CSF for maritime operations' },
-  { title: 'MTS Cyber Incident Response Playbook',   desc: 'Marine Transportation System Cyber Incident Response Playbook' },
+  { title: 'MTS Cyber Incident Response Playbook',    desc: 'Marine Transportation System Cyber Incident Response Playbook' },
 ]
-
-// ── Data: training table ───────────────────────────────────
 const TRAINING_ROWS = [
-  {
-    req:    '(d)(1)(i): Relevant provisions of the Cybersecurity Plan',
-    all:    'Deferred until CSP approved',
-    key:    'Deferred until CSP approved',
-    untrained: 'MUST BE ESCORTED',
-    deadline: 'Within 60 days of CSP approval, but NLT July 16, 2027',
-    passed: false,
-  },
-  {
-    req:    '(d)(1)(ii): Recognition and detection of cybersecurity threats and all types of cyber incidents',
-    all:    'Yes',
-    key:    'Yes',
-    untrained: 'MUST BE ESCORTED',
-    deadline: 'NLT January 12, 2026',
-    passed: true,
-  },
-  {
-    req:    '(d)(1)(iii): Techniques used to circumvent cybersecurity measures',
-    all:    'Yes',
-    key:    'Yes',
-    untrained: 'MUST BE ESCORTED',
-    deadline: 'NLT January 12, 2026',
-    passed: true,
-  },
-  {
-    req:    '(d)(1)(iv): Procedures for reporting a cyber incident to the CySO',
-    all:    'Deferred until CySO designated',
-    key:    'Deferred until CySO designated',
-    untrained: 'MUST BE ESCORTED',
-    deadline: 'Within 30 days of CySO designation, but NLT July 16, 2027',
-    passed: false,
-  },
-  {
-    req:    '(d)(1)(v): OT-specific cybersecurity training for personnel whose duties include using OT',
-    all:    'Yes',
-    key:    'Yes',
-    untrained: 'MUST BE ESCORTED',
-    deadline: 'NLT January 12, 2026',
-    passed: true,
-  },
-  {
-    req:    '(d)(2)(i): Roles and responsibilities during a cyber incident and response procedure',
-    all:    'No',
-    key:    'Yes',
-    untrained: 'MUST BE ESCORTED',
-    deadline: 'NLT January 12, 2026',
-    passed: true,
-  },
-  {
-    req:    '(d)(2)(ii): Maintaining current knowledge of changing cybersecurity threats and countermeasures',
-    all:    'No',
-    key:    'Yes',
-    untrained: 'MUST BE ESCORTED',
-    deadline: 'NLT January 12, 2026',
-    passed: true,
-  },
+  { req: '(d)(1)(i): Relevant provisions of the Cybersecurity Plan',                                       all: 'Deferred until CSP approved',      key: 'Deferred until CSP approved',      untrained: 'MUST BE ESCORTED', deadline: 'Within 60 days of CSP approval, but NLT July 16, 2027', passed: false },
+  { req: '(d)(1)(ii): Recognition and detection of cybersecurity threats and all types of cyber incidents', all: 'Yes', key: 'Yes', untrained: 'MUST BE ESCORTED', deadline: 'NLT January 12, 2026', passed: true  },
+  { req: '(d)(1)(iii): Techniques used to circumvent cybersecurity measures',                               all: 'Yes', key: 'Yes', untrained: 'MUST BE ESCORTED', deadline: 'NLT January 12, 2026', passed: true  },
+  { req: '(d)(1)(iv): Procedures for reporting a cyber incident to the CySO',                              all: 'Deferred until CySO designated',    key: 'Deferred until CySO designated',    untrained: 'MUST BE ESCORTED', deadline: 'Within 30 days of CySO designation, but NLT July 16, 2027', passed: false },
+  { req: '(d)(1)(v): OT-specific cybersecurity training for personnel whose duties include using OT',       all: 'Yes', key: 'Yes', untrained: 'MUST BE ESCORTED', deadline: 'NLT January 12, 2026', passed: true  },
+  { req: '(d)(2)(i): Roles and responsibilities during a cyber incident and response procedure',            all: 'No',  key: 'Yes', untrained: 'MUST BE ESCORTED', deadline: 'NLT January 12, 2026', passed: true  },
+  { req: '(d)(2)(ii): Maintaining current knowledge of changing cybersecurity threats and countermeasures', all: 'No',  key: 'Yes', untrained: 'MUST BE ESCORTED', deadline: 'NLT January 12, 2026', passed: true  },
 ]
-
-// ── Data: incident reporting cards ────────────────────────
 const INCIDENT_CARDS = [
-  {
-    color:   C.icAmber,
-    colorBg: 'rgba(210,153,34,0.07)',
-    colorBorder: 'rgba(210,153,34,0.3)',
-    scope:   'ALL MTS Stakeholders',
-    title:   'Cyber Incident',
-    def:     'An occurrence that actually or imminently jeopardizes the integrity, confidentiality, or availability of information or an information system.',
-    reportTo: 'FBI, CISA, and COTP (or NRC)',
-    when:    'Incidents that lead to or could lead to: substantial loss of confidentiality/integrity/availability, disruption of business operations, unauthorized access to personal information, or potential disruption to other critical infrastructure.',
-    note:    'Routine spam, phishing attempts that don\'t breach defenses, and accidental USB plugging are NOT reportable. But monitor for escalation.',
-  },
-  {
-    color:   C.icOrange,
-    colorBg: 'rgba(230,126,34,0.07)',
-    colorBorder: 'rgba(230,126,34,0.3)',
-    scope:   'MTSA-Regulated Entities Only',
-    title:   'Breach of Security',
-    def:     'Security measures circumvented, eluded, or violated — including computer/network security measures connected to FSP functions.',
-    examples: 'Unauthorized access to restricted areas; intrusion into systems linked to security plan functions; successful phishing allowing access to internal IT linked to MTS; viruses/malware on mission-critical servers; denial of service on security-linked systems.',
-    reportTo: 'NRC at 1-800-424-8802 (without delay), and local COTP',
-    when:    'Without delay upon discovery.',
-  },
-  {
-    color:   C.icYellow,
-    colorBg: 'rgba(201,162,39,0.07)',
-    colorBorder: 'rgba(201,162,39,0.3)',
-    scope:   'MTSA-Regulated Entities Only',
-    title:   'Suspicious Activity',
-    def:     'Observed behavior reasonably indicative of pre-operational planning for terrorism or criminal activity.',
-    examples: 'Persistent targeted scanning; spear phishing campaigns; marked increase in attack volume/sophistication; unsuccessful but targeted incidents on systems that could contribute to a TSI.',
-    reportTo: 'NRC at 1-800-424-8802',
-    when:    'Upon detection of suspicious patterns.',
-  },
-  {
-    color:   C.icRed,
-    colorBg: 'rgba(218,54,51,0.07)',
-    colorBorder: 'rgba(218,54,51,0.3)',
-    scope:   'MTSA-Regulated Entities Only',
-    title:   'Transportation Security Incident (TSI)',
-    def:     'Security incident resulting in significant loss of life, environmental damage, transportation system disruption, or economic disruption.',
-    note:    'Cyber incidents affecting business/admin systems (not just OT) can be a TSI if they cause transportation system or economic disruption.',
-    reportTo: 'Local COTP (without delay), then follow FSP procedures',
-    when:    'Without delay — immediately upon determination.',
-  },
+  { color: C.icAmber,  colorBg: 'rgba(210,153,34,0.07)',  colorBorder: 'rgba(210,153,34,0.3)',  scope: 'ALL MTS Stakeholders',          title: 'Cyber Incident',                      def: 'An occurrence that actually or imminently jeopardizes the integrity, confidentiality, or availability of information or an information system.', when: 'Incidents that lead to or could lead to: substantial loss of confidentiality/integrity/availability, disruption of business operations, unauthorized access to personal information, or potential disruption to other critical infrastructure.', note: 'Routine spam, phishing attempts that don\'t breach defenses, and accidental USB plugging are NOT reportable. But monitor for escalation.', reportTo: 'FBI, CISA, and COTP (or NRC)' },
+  { color: C.icOrange, colorBg: 'rgba(230,126,34,0.07)',  colorBorder: 'rgba(230,126,34,0.3)',  scope: 'MTSA-Regulated Entities Only',  title: 'Breach of Security',                  def: 'Security measures circumvented, eluded, or violated — including computer/network security measures connected to FSP functions.', examples: 'Unauthorized access to restricted areas; intrusion into systems linked to security plan functions; successful phishing allowing access to internal IT linked to MTS; viruses/malware on mission-critical servers; denial of service on security-linked systems.', reportTo: 'NRC at 1-800-424-8802 (without delay), and local COTP' },
+  { color: C.icYellow, colorBg: 'rgba(201,162,39,0.07)',  colorBorder: 'rgba(201,162,39,0.3)',  scope: 'MTSA-Regulated Entities Only',  title: 'Suspicious Activity',                 def: 'Observed behavior reasonably indicative of pre-operational planning for terrorism or criminal activity.', examples: 'Persistent targeted scanning; spear phishing campaigns; marked increase in attack volume/sophistication; unsuccessful but targeted incidents on systems that could contribute to a TSI.', reportTo: 'NRC at 1-800-424-8802' },
+  { color: C.icRed,    colorBg: 'rgba(218,54,51,0.07)',   colorBorder: 'rgba(218,54,51,0.3)',   scope: 'MTSA-Regulated Entities Only',  title: 'Transportation Security Incident (TSI)', def: 'Security incident resulting in significant loss of life, environmental damage, transportation system disruption, or economic disruption.', note: 'Cyber incidents affecting business/admin systems (not just OT) can be a TSI if they cause transportation system or economic disruption.', reportTo: 'Local COTP (without delay), then follow FSP procedures' },
 ]
-
-// ── Data: FAQ ──────────────────────────────────────────────
 const FAQ_ITEMS = [
-  {
-    q: 'Do we have to completely rewrite our Facility Security Plan?',
-    a: 'No. If your FSA identifies cyber vulnerabilities not already covered, you only need to amend your FSP with an annex or addendum addressing those vulnerabilities. Submit it to your local COTP. A complete rewrite is not required unless you prefer that approach.',
-  },
-  {
-    q: 'Is there a Coast Guard template for the cyber annex?',
-    a: 'No official template exists. However, the NIST Cybersecurity Framework is widely referenced, and the Coast Guard has published a Facility Inspector Cyber Job Aid that can also be used by industry as a guide.',
-  },
-  {
-    q: 'What if our IT systems are managed at corporate level, not at the facility?',
-    a: 'The FSO should determine who within the company manages IT networks and systems. You need to engage corporate IT to jointly identify which vulnerabilities impact your specific facility. Then document how those vulnerabilities are addressed in the FSP cyber annex. This collaboration between FSO and corporate IT is explicitly encouraged by the Coast Guard.',
-  },
-  {
-    q: 'We manage multiple MTSA facilities across different COTP zones. Can we submit one blanket annex?',
-    a: 'No. The Coast Guard explicitly warns against blanket submissions. Every facility has unique vulnerabilities that need to be addressed individually. Work directly with each applicable COTP. However, you can use a common framework across facilities while tailoring the specifics.',
-  },
-  {
-    q: 'What cybersecurity standards does the Coast Guard recommend?',
-    a: 'There is no Coast Guard-approved list, but the NIST Cybersecurity Framework is the most widely referenced. The Coast Guard also encourages use of NIST SP 800-82 for industrial control systems. Other standards like ISA 62443 and ISO 27001 are also commonly mapped to maritime cyber requirements.',
-  },
-  {
-    q: 'Do we need to include a network diagram in our FSP?',
-    a: 'No. Current law and regulations do not require a network diagram in the FSP.',
-  },
-  {
-    q: 'What training should FSOs get for cybersecurity?',
-    a: 'There are no Coast Guard-approved cybersecurity trainings for FSOs specifically. FSOs are encouraged to build relationships with their company\'s IT staff and seek out qualified third-party training. The CG-5PC Policy Letter 01-25 outlines specific training topics that must be covered for all personnel with IT/OT access.',
-  },
+  { q: 'Do we have to completely rewrite our Facility Security Plan?',                                         a: 'No. If your FSA identifies cyber vulnerabilities not already covered, you only need to amend your FSP with an annex or addendum addressing those vulnerabilities. Submit it to your local COTP. A complete rewrite is not required unless you prefer that approach.' },
+  { q: 'Is there a Coast Guard template for the cyber annex?',                                                 a: 'No official template exists. However, the NIST Cybersecurity Framework is widely referenced, and the Coast Guard has published a Facility Inspector Cyber Job Aid that can also be used by industry as a guide.' },
+  { q: 'What if our IT systems are managed at corporate level, not at the facility?',                          a: 'The FSO should determine who within the company manages IT networks and systems. You need to engage corporate IT to jointly identify which vulnerabilities impact your specific facility. Then document how those vulnerabilities are addressed in the FSP cyber annex. This collaboration between FSO and corporate IT is explicitly encouraged by the Coast Guard.' },
+  { q: 'We manage multiple MTSA facilities across different COTP zones. Can we submit one blanket annex?',     a: 'No. The Coast Guard explicitly warns against blanket submissions. Every facility has unique vulnerabilities that need to be addressed individually. Work directly with each applicable COTP. However, you can use a common framework across facilities while tailoring the specifics.' },
+  { q: 'What cybersecurity standards does the Coast Guard recommend?',                                         a: 'There is no Coast Guard-approved list, but the NIST Cybersecurity Framework is the most widely referenced. The Coast Guard also encourages use of NIST SP 800-82 for industrial control systems. Other standards like ISA 62443 and ISO 27001 are also commonly mapped to maritime cyber requirements.' },
+  { q: 'Do we need to include a network diagram in our FSP?',                                                  a: 'No. Current law and regulations do not require a network diagram in the FSP.' },
+  { q: 'What training should FSOs get for cybersecurity?',                                                     a: 'There are no Coast Guard-approved cybersecurity trainings for FSOs specifically. FSOs are encouraged to build relationships with their company\'s IT staff and seek out qualified third-party training. The CG-5PC Policy Letter 01-25 outlines specific training topics that must be covered for all personnel with IT/OT access.' },
 ]
-
-// ── Data: NVIC 01-20 checklist ─────────────────────────────
 const CHECKLIST_ITEMS = [
-  { ref: '§105.200/106.200', title: 'Security Administration & Organization',   body: 'Define roles and responsibilities for cyber security personnel, how physical and cyber security teams coordinate.' },
-  { ref: '§105.205–215/106.205–220', title: 'Personnel Training',              body: 'Describe how cyber security is included in training, how material stays current.' },
-  { ref: '§105.220/106.225', title: 'Drills & Exercises',                       body: 'Test cyber vulnerabilities of the FSP, consider combined cyber-physical scenarios.' },
-  { ref: '§105.225/106.230', title: 'Records & Documentation',                  body: 'Maintain records of cyber training, drills, incidents; protect electronic records from unauthorized deletion.' },
-  { ref: '§105.235/106.240', title: 'Communications',                           body: 'Describe how cyber conditions are communicated to vessels, COTP, and authorities; backup communications plan if systems compromised.' },
-  { ref: '§105.240/106.245', title: 'Vessel Interface Procedures',              body: 'Address network interaction, portable media exchange, remote access, wireless sharing with vessels.' },
-  { ref: '§105.250/106.255', title: 'Security Systems Maintenance',             body: 'Procedures for managing software updates and patch installations on FSP-supporting systems.' },
-  { ref: '§105.255/106.260', title: 'Access Control',                           body: 'Security measures for cyber systems controlling physical access and systems within secure/restricted areas.' },
-  { ref: '§105.260/106.265', title: 'Restricted Areas',                         body: 'Limit unauthorized access to systems controlled by cyber networks; address both physical and cyber access paths.' },
-  { ref: '§105.265',         title: 'Cargo Handling',                           body: 'Protect cargo manifests and documentation from tampering and unauthorized access.' },
-  { ref: '§105.270/106.270', title: 'Delivery of Stores',                       body: 'Protect electronic files related to stores and bunkers delivery.' },
-  { ref: '§105.275/106.275', title: 'Monitoring',                               body: 'Security measures for continuous monitoring of facility, restricted areas, and vessels using cyber-dependent systems.' },
-  { ref: '§105.400/106.400', title: 'FSP Development',                          body: 'Ensure FSO develops and implements plan addressing each cyber vulnerability from the FSA.' },
-  { ref: '§105.415/106.415', title: 'Audits & Amendments',                      body: 'Annual audit of cyber provisions; audit report should confirm cyber measures are in place and effective.' },
+  { ref: '§105.200/106.200',      title: 'Security Administration & Organization', body: 'Define roles and responsibilities for cyber security personnel, how physical and cyber security teams coordinate.' },
+  { ref: '§105.205–215/106.205–220', title: 'Personnel Training',                  body: 'Describe how cyber security is included in training, how material stays current.' },
+  { ref: '§105.220/106.225',      title: 'Drills & Exercises',                      body: 'Test cyber vulnerabilities of the FSP, consider combined cyber-physical scenarios.' },
+  { ref: '§105.225/106.230',      title: 'Records & Documentation',                 body: 'Maintain records of cyber training, drills, incidents; protect electronic records from unauthorized deletion.' },
+  { ref: '§105.235/106.240',      title: 'Communications',                          body: 'Describe how cyber conditions are communicated to vessels, COTP, and authorities; backup communications plan if systems compromised.' },
+  { ref: '§105.240/106.245',      title: 'Vessel Interface Procedures',             body: 'Address network interaction, portable media exchange, remote access, wireless sharing with vessels.' },
+  { ref: '§105.250/106.255',      title: 'Security Systems Maintenance',            body: 'Procedures for managing software updates and patch installations on FSP-supporting systems.' },
+  { ref: '§105.255/106.260',      title: 'Access Control',                          body: 'Security measures for cyber systems controlling physical access and systems within secure/restricted areas.' },
+  { ref: '§105.260/106.265',      title: 'Restricted Areas',                        body: 'Limit unauthorized access to systems controlled by cyber networks; address both physical and cyber access paths.' },
+  { ref: '§105.265',              title: 'Cargo Handling',                          body: 'Protect cargo manifests and documentation from tampering and unauthorized access.' },
+  { ref: '§105.270/106.270',      title: 'Delivery of Stores',                      body: 'Protect electronic files related to stores and bunkers delivery.' },
+  { ref: '§105.275/106.275',      title: 'Monitoring',                              body: 'Security measures for continuous monitoring of facility, restricted areas, and vessels using cyber-dependent systems.' },
+  { ref: '§105.400/106.400',      title: 'FSP Development',                         body: 'Ensure FSO develops and implements plan addressing each cyber vulnerability from the FSA.' },
+  { ref: '§105.415/106.415',      title: 'Audits & Amendments',                     body: 'Annual audit of cyber provisions; audit report should confirm cyber measures are in place and effective.' },
 ]
+const QUIZ_QUESTIONS = [
+  { q: 'Have you designated a Cybersecurity Officer (CySO)?',                                          options: ['Yes', 'No', 'Not Sure'] },
+  { q: 'Have all personnel with IT/OT access completed cybersecurity training per §101.650?',           options: ['Yes', 'No', 'Partially'] },
+  { q: 'Have you completed a cybersecurity assessment of your IT and OT systems?',                      options: ['Yes', 'No', 'In Progress'] },
+  { q: 'Have you drafted or started your Cybersecurity Plan for COTP submission?',                      options: ['Yes', 'No', 'In Progress'] },
+  { q: 'Have you conducted a cybersecurity drill or exercise?',                                         options: ['Yes', 'No'] },
+]
+function quizScore(opt) {
+  if (opt === 'Yes')                          return 2
+  if (opt === 'In Progress' || opt === 'Partially') return 1
+  return 0
+}
 
-// ── FAQ Accordion item ─────────────────────────────────────
+// ── Subcomponents ──────────────────────────────────────────
+
 function FaqItem({ q, a, open, onToggle }) {
-  const bodyRef = useRef(null)
   return (
-    <div style={{
-      background: C.bgCard, border: `1px solid ${C.border}`,
-      borderRadius: 8, overflow: 'hidden',
-      marginBottom: 6,
-    }}>
-      <button
-        onClick={onToggle}
-        style={{
-          width: '100%', textAlign: 'left', background: 'none', border: 'none',
-          cursor: 'pointer', padding: '20px 24px',
-          display: 'flex', justifyContent: 'space-between', alignItems: 'center', gap: 16,
-        }}
-      >
+    <div style={{ background: C.bgCard, border: `1px solid ${C.border}`, borderRadius: 8, overflow: 'hidden', marginBottom: 6 }}>
+      <button onClick={onToggle} style={{ width: '100%', textAlign: 'left', background: 'none', border: 'none', cursor: 'pointer', padding: '20px 24px', display: 'flex', justifyContent: 'space-between', alignItems: 'center', gap: 16 }}>
         <span style={{ fontSize: 17, fontWeight: 600, color: C.heading, lineHeight: 1.4 }}>{q}</span>
-        <span style={{
-          fontSize: 20, color: C.muted, flexShrink: 0,
-          transform: open ? 'rotate(45deg)' : 'rotate(0deg)',
-          transition: 'transform 0.2s ease',
-          display: 'inline-block',
-        }}>+</span>
+        <span style={{ fontSize: 20, color: C.muted, flexShrink: 0, transform: open ? 'rotate(45deg)' : 'none', transition: 'transform 0.2s', display: 'inline-block' }}>+</span>
       </button>
-      <div style={{
-        maxHeight: open ? '600px' : '0',
-        overflow: 'hidden',
-        transition: 'max-height 0.25s ease',
-      }}>
+      <div style={{ maxHeight: open ? '600px' : '0', overflow: 'hidden', transition: 'max-height 0.25s ease' }}>
         <p style={{ fontSize: 16, color: C.muted, lineHeight: 1.75, margin: 0, padding: '0 24px 20px' }}>{a}</p>
       </div>
     </div>
   )
 }
 
-// ── Back to top button ─────────────────────────────────────
-function BackToTop() {
-  const [visible, setVisible] = useState(false)
-  useEffect(() => {
-    const onScroll = () => setVisible(window.scrollY > 600)
-    window.addEventListener('scroll', onScroll, { passive: true })
-    return () => window.removeEventListener('scroll', onScroll)
-  }, [])
+function SavingsCalculator() {
+  const [raw, setRaw] = useState('1')
+  const count        = Math.max(1, Math.min(999, parseInt(raw, 10) || 1))
+  const consultant   = count * 25000
+  const helm         = count * 1188
+  const savings      = consultant - helm
+  const hoursBack    = count * 36 * 4   // 36 hrs × 4 quarters
+
+  const fmt = n => '$' + n.toLocaleString()
+
   return (
-    <button
-      onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
-      aria-label="Back to top"
-      style={{
-        position: 'fixed', bottom: 28, right: 24, zIndex: 200,
-        background: C.bgCard, border: `1px solid ${C.borderMid}`,
-        color: C.muted, width: 40, height: 40, borderRadius: 8,
-        cursor: 'pointer', fontSize: 16,
-        display: 'flex', alignItems: 'center', justifyContent: 'center',
-        opacity: visible ? 1 : 0,
-        pointerEvents: visible ? 'auto' : 'none',
-        transition: 'opacity 0.2s ease',
-        boxShadow: C.cardShadow,
-      }}
-    >↑</button>
+    <div style={{ background: C.bg, border: `1px solid ${C.borderMid}`, borderRadius: 12, padding: '28px 32px', marginTop: 32 }}>
+      <div style={{ fontSize: 14, fontWeight: 700, color: C.muted, textTransform: 'uppercase', letterSpacing: '0.1em', marginBottom: 20 }}>Savings Calculator</div>
+
+      <div style={{ display: 'flex', alignItems: 'center', gap: 14, marginBottom: 28, flexWrap: 'wrap' }}>
+        <label style={{ fontSize: 16, color: C.body, fontWeight: 500 }}>How many MTSA facilities do you manage?</label>
+        <input
+          type="number" min="1" max="999" value={raw}
+          onChange={e => setRaw(e.target.value)}
+          style={{
+            width: 80, padding: '8px 12px', fontSize: 20, fontWeight: 700,
+            background: C.bgCard, border: `1px solid ${C.borderMid}`, borderRadius: 6,
+            color: C.heading, textAlign: 'center', outline: 'none',
+          }}
+        />
+      </div>
+
+      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(180px, 1fr))', gap: 12 }}>
+        <div style={{ background: C.bgCard, border: `1px solid ${C.border}`, borderRadius: 8, padding: '16px 18px' }}>
+          <div style={{ fontSize: 12, fontWeight: 700, color: C.faint, textTransform: 'uppercase', letterSpacing: '0.08em', marginBottom: 6 }}>Consultant Cost</div>
+          <div style={{ fontSize: 22, fontWeight: 800, color: C.body, letterSpacing: '-0.5px' }}>{fmt(consultant)}<span style={{ fontSize: 13, color: C.muted, fontWeight: 400 }}>/yr</span></div>
+          <div style={{ fontSize: 12, color: C.faint, marginTop: 4 }}>{count} × $25,000</div>
+        </div>
+        <div style={{ background: C.bgCard, border: `1px solid ${C.border}`, borderRadius: 8, padding: '16px 18px' }}>
+          <div style={{ fontSize: 12, fontWeight: 700, color: C.faint, textTransform: 'uppercase', letterSpacing: '0.08em', marginBottom: 6 }}>HELM Cost</div>
+          <div style={{ fontSize: 22, fontWeight: 800, color: C.navyAccent, letterSpacing: '-0.5px' }}>{fmt(helm)}<span style={{ fontSize: 13, color: C.muted, fontWeight: 400 }}>/yr</span></div>
+          <div style={{ fontSize: 12, color: C.faint, marginTop: 4 }}>{count} × $1,188</div>
+        </div>
+        <div style={{ background: C.greenLight, border: `1px solid ${C.greenBorder}`, borderRadius: 8, padding: '16px 18px' }}>
+          <div style={{ fontSize: 12, fontWeight: 700, color: C.green, textTransform: 'uppercase', letterSpacing: '0.08em', marginBottom: 6 }}>Annual Savings</div>
+          <div style={{ fontSize: 28, fontWeight: 800, color: C.green, letterSpacing: '-1px' }}>{fmt(savings)}<span style={{ fontSize: 13, fontWeight: 400 }}>/yr</span></div>
+          <div style={{ fontSize: 12, color: C.green, marginTop: 4, opacity: 0.8 }}>That's {hoursBack.toLocaleString()} hrs back</div>
+        </div>
+      </div>
+    </div>
   )
 }
 
-// ── Main component ─────────────────────────────────────────
+function ReadinessQuiz() {
+  const [answers, setAnswers] = useState({})
+  const [showResult, setShowResult] = useState(false)
+
+  const allAnswered = QUIZ_QUESTIONS.every((_, i) => answers[i] !== undefined)
+  const totalScore  = Object.values(answers).reduce((s, v) => s + v, 0)
+
+  useEffect(() => {
+    if (allAnswered) setShowResult(true)
+  }, [allAnswered])
+
+  function reset() { setAnswers({}); setShowResult(false) }
+
+  function getResult(score) {
+    if (score <= 3)  return { color: C.red,        bg: C.redLight,   border: C.redBorder,   label: 'Critical',     text: 'Your facility has significant gaps. With 15 months until the July 2027 deadline and a 12-18 month buildout timeline, you need to start immediately.',                               cta: 'Get your facility\'s compliance profile', href: 'https://helmport.com' }
+    if (score <= 6)  return { color: C.amber,       bg: C.amberLight, border: C.amberBorder, label: 'Behind Schedule', text: 'You\'ve started but major requirements remain. Most facilities at this stage need 8-12 months to reach full compliance.',                                                  cta: 'See what\'s missing — Start HELM Free Trial', href: 'https://helmport.com/signup' }
+    if (score <= 9)  return { color: C.green,        bg: C.greenLight, border: C.greenBorder, label: 'On Track',     text: 'You\'re making progress. Use HELM to track the remaining items and generate your inspection package.',                                                                          cta: 'Track your progress', href: 'https://helmport.com/signup' }
+    return             { color: C.navyAccent,     bg: C.navyBadge,  border: 'rgba(68,147,248,0.4)', label: 'Compliant', text: 'You\'re ahead of most facilities. HELM can maintain your compliance posture and alert you to regulatory changes.',                                                       cta: 'Stay compliant', href: 'https://helmport.com/signup' }
+  }
+
+  const result = showResult ? getResult(totalScore) : null
+
+  return (
+    <div>
+      {/* Questions */}
+      <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
+        {QUIZ_QUESTIONS.map((item, qi) => (
+          <div key={qi} style={{ background: C.bgCard, border: `1px solid ${C.border}`, borderRadius: 10, padding: '22px 26px' }}>
+            <div style={{ display: 'flex', gap: 12, marginBottom: 16, alignItems: 'flex-start' }}>
+              <span style={{ background: answers[qi] !== undefined ? C.navyBadge : C.bg, border: `1px solid ${answers[qi] !== undefined ? C.navyAccent : C.borderMid}`, color: answers[qi] !== undefined ? C.navyAccent : C.faint, fontSize: 12, fontWeight: 700, width: 24, height: 24, borderRadius: 6, display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0, marginTop: 1 }}>
+                {answers[qi] !== undefined ? '✓' : qi + 1}
+              </span>
+              <span style={{ fontSize: 17, fontWeight: 600, color: C.heading, lineHeight: 1.45 }}>{item.q}</span>
+            </div>
+            <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap', paddingLeft: 36 }}>
+              {item.options.map(opt => {
+                const selected = answers[qi]?.label === opt
+                const score    = quizScore(opt)
+                const selColor = score === 2 ? C.green : score === 1 ? C.amber : C.faint
+                return (
+                  <button key={opt}
+                    onClick={() => setAnswers(prev => ({ ...prev, [qi]: { label: opt, score } }))}
+                    style={{
+                      padding: '8px 20px', fontSize: 14, fontWeight: 600, borderRadius: 6, cursor: 'pointer',
+                      background: selected ? (score === 2 ? C.greenLight : score === 1 ? C.amberLight : C.redLight) : C.bg,
+                      border: `1px solid ${selected ? selColor : C.borderMid}`,
+                      color: selected ? selColor : C.muted,
+                      transition: 'all 0.15s',
+                    }}
+                  >{opt}</button>
+                )
+              })}
+            </div>
+          </div>
+        ))}
+      </div>
+
+      {/* Result */}
+      {showResult && result && (
+        <div style={{ background: result.bg, border: `1px solid ${result.border}`, borderRadius: 12, padding: '28px 32px', marginTop: 20 }}>
+          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', flexWrap: 'wrap', gap: 12, marginBottom: 16 }}>
+            <div>
+              <span style={{ display: 'inline-block', background: result.color, color: '#fff', fontSize: 12, fontWeight: 800, letterSpacing: '0.1em', textTransform: 'uppercase', padding: '4px 12px', borderRadius: 4, marginBottom: 10 }}>{result.label}</span>
+              <div style={{ fontSize: 28, fontWeight: 800, color: result.color, letterSpacing: '-0.5px', lineHeight: 1 }}>
+                {totalScore} <span style={{ fontSize: 16, color: C.muted, fontWeight: 400 }}>/ 10</span>
+              </div>
+            </div>
+            <button onClick={reset} style={{ background: 'none', border: `1px solid ${C.borderMid}`, color: C.muted, fontSize: 13, padding: '6px 16px', borderRadius: 6, cursor: 'pointer', fontWeight: 500 }}>Retake</button>
+          </div>
+          <p style={{ fontSize: 16, color: C.body, lineHeight: 1.7, margin: '0 0 8px' }}>{result.text}</p>
+          <p style={{ fontSize: 13, color: C.muted, margin: '0 0 20px', fontStyle: 'italic' }}>Your facility scored {totalScore}/10. The average MTSA facility we assess scores 2–3/10.</p>
+          <a href={result.href} target="_blank" rel="noopener noreferrer"
+            style={{ display: 'inline-block', background: result.color, color: '#fff', textDecoration: 'none', padding: '11px 24px', borderRadius: 8, fontSize: 14, fontWeight: 700 }}>
+            {result.cta} →
+          </a>
+        </div>
+      )}
+    </div>
+  )
+}
+
+function BackToTop() {
+  const [visible, setVisible] = useState(false)
+  useEffect(() => {
+    const fn = () => setVisible(window.scrollY > 600)
+    window.addEventListener('scroll', fn, { passive: true }); return () => window.removeEventListener('scroll', fn)
+  }, [])
+  return (
+    <button onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })} aria-label="Back to top"
+      style={{ position: 'fixed', bottom: 28, right: 24, zIndex: 200, background: C.bgCard, border: `1px solid ${C.borderMid}`, color: C.muted, width: 40, height: 40, borderRadius: 8, cursor: 'pointer', fontSize: 16, display: 'flex', alignItems: 'center', justifyContent: 'center', opacity: visible ? 1 : 0, pointerEvents: visible ? 'auto' : 'none', transition: 'opacity 0.2s', boxShadow: C.cardShadow }}>
+      ↑
+    </button>
+  )
+}
+
+// ══════════════════════════════════════════════════════════
+// App
+// ══════════════════════════════════════════════════════════
 export default function App() {
-  const daysLeft = useCountdown('2027-07-16T00:00:00')
+  const daysLeft  = useCountdown('2027-07-16T00:00:00')
   const [openFaq, setOpenFaq] = useState(null)
 
   return (
     <div style={{ background: C.bg, minHeight: '100vh', color: C.body }}>
 
-      {/* ── Primary Nav ──────────────────────────────────── */}
-      <nav style={{
-        borderBottom: `1px solid ${C.border}`,
-        padding: '0 32px', height: 52,
-        display: 'flex', alignItems: 'center', justifyContent: 'space-between',
-        position: 'sticky', top: 0,
-        background: 'rgba(13,17,23,0.97)', backdropFilter: 'blur(8px)',
-        zIndex: 110,
-      }}>
+      {/* ── Primary nav ───────────────────────────── */}
+      <nav style={{ borderBottom: `1px solid ${C.border}`, padding: '0 32px', height: 52, display: 'flex', alignItems: 'center', justifyContent: 'space-between', position: 'sticky', top: 0, background: 'rgba(13,17,23,0.97)', backdropFilter: 'blur(8px)', zIndex: 110 }}>
         <span style={{ fontWeight: 800, fontSize: 15, letterSpacing: '-0.3px', color: C.heading }}>
           ⚓ HELM <span style={{ color: C.faint, fontWeight: 400, fontSize: 14 }}>/ Subpart F Guide</span>
         </span>
-        <a href="https://helmport.com" target="_blank" rel="noopener noreferrer"
-          style={{ fontSize: 13, color: C.muted, textDecoration: 'none', border: `1px solid ${C.borderMid}`, padding: '5px 14px', borderRadius: 6, fontWeight: 500 }}>
-          helmport.com →
-        </a>
+        <a href="https://helmport.com" target="_blank" rel="noopener noreferrer" style={{ fontSize: 13, color: C.muted, textDecoration: 'none', border: `1px solid ${C.borderMid}`, padding: '5px 14px', borderRadius: 6, fontWeight: 500 }}>helmport.com →</a>
       </nav>
 
-      {/* ── Section Nav ──────────────────────────────────── */}
-      <nav aria-label="Section navigation" style={{
-        borderBottom: `1px solid ${C.border}`,
-        background: 'rgba(1,4,9,0.97)', backdropFilter: 'blur(8px)',
-        position: 'sticky', top: 52, zIndex: 100,
-        overflowX: 'auto', whiteSpace: 'nowrap',
-        scrollbarWidth: 'none',
-      }}>
-        <div style={{ display: 'inline-flex', padding: '0 24px', gap: 0, minWidth: 'max-content' }}>
+      {/* ── Section nav ───────────────────────────── */}
+      <nav aria-label="Jump to section" style={{ borderBottom: `1px solid ${C.border}`, background: 'rgba(1,4,9,0.97)', backdropFilter: 'blur(8px)', position: 'sticky', top: 52, zIndex: 100, overflowX: 'auto', whiteSpace: 'nowrap', scrollbarWidth: 'none' }}>
+        <div style={{ display: 'inline-flex', padding: '0 24px', minWidth: 'max-content' }}>
           {NAV_SECTIONS.map(s => (
-            <a key={s.id} href={`#${s.id}`}
-              style={{
-                display: 'inline-block', padding: '10px 14px',
-                fontSize: 13, color: C.muted, textDecoration: 'none',
-                fontWeight: 500, letterSpacing: '0.01em',
-                borderBottom: '2px solid transparent',
-                transition: 'color 0.15s, border-color 0.15s',
-              }}
+            <a key={s.id} href={`#${s.id}`} style={{ display: 'inline-block', padding: '10px 14px', fontSize: 13, color: C.muted, textDecoration: 'none', fontWeight: 500, borderBottom: '2px solid transparent', transition: 'color 0.15s, border-color 0.15s' }}
               onMouseEnter={e => { e.currentTarget.style.color = C.heading; e.currentTarget.style.borderBottomColor = C.borderMid }}
-              onMouseLeave={e => { e.currentTarget.style.color = C.muted; e.currentTarget.style.borderBottomColor = 'transparent' }}
-            >{s.label}</a>
+              onMouseLeave={e => { e.currentTarget.style.color = C.muted;   e.currentTarget.style.borderBottomColor = 'transparent' }}>
+              {s.label}
+            </a>
           ))}
         </div>
       </nav>
@@ -361,16 +325,11 @@ export default function App() {
       ══════════════════════════════════════════ */}
       <section id="hero" style={{ background: C.bg, borderBottom: `1px solid ${C.border}`, padding: '80px 32px 72px' }}>
         <div style={{ maxWidth: 860, margin: '0 auto' }}>
-          <div style={{ display: 'inline-block', background: C.navyBadge, border: `1px solid ${C.borderMid}`, borderRadius: 4, padding: '5px 14px', fontSize: 12, color: C.navyAccent, letterSpacing: '0.08em', textTransform: 'uppercase', marginBottom: 32, fontWeight: 700 }}>
-            33 CFR Part 101 · Subpart F · Enforceable July 16, 2025
-          </div>
+          <div style={{ display: 'inline-block', background: C.navyBadge, border: `1px solid ${C.borderMid}`, borderRadius: 4, padding: '5px 14px', fontSize: 12, color: C.navyAccent, letterSpacing: '0.08em', textTransform: 'uppercase', marginBottom: 32, fontWeight: 700 }}>33 CFR Part 101 · Subpart F · Enforceable July 16, 2025</div>
           <h1 style={{ fontSize: 'clamp(32px, 4.5vw, 52px)', fontWeight: 800, lineHeight: 1.15, letterSpacing: '-1px', color: C.heading, margin: '0 0 24px' }}>
-            USCG Subpart F Cybersecurity Rule:<br />
-            <span style={{ color: C.muted, fontWeight: 600 }}>What Every MTSA Facility Needs to Know</span>
+            USCG Subpart F Cybersecurity Rule:<br /><span style={{ color: C.muted, fontWeight: 600 }}>What Every MTSA Facility Needs to Know</span>
           </h1>
-          <p style={{ ...mutedText, maxWidth: 660, margin: '0 0 56px' }}>
-            The mandatory cybersecurity requirements under 33 CFR Part 101, Subpart F are now enforceable. Here's what your facility must do and when.
-          </p>
+          <p style={{ ...mutedText, maxWidth: 660, margin: '0 0 56px' }}>The mandatory cybersecurity requirements under 33 CFR Part 101, Subpart F are now enforceable. Here's what your facility must do and when.</p>
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(290px, 1fr))', gap: 16 }}>
             <div style={{ background: C.bgCard, border: `1px solid ${C.borderMid}`, borderLeft: `4px solid ${C.faint}`, borderRadius: 10, padding: '24px 28px', boxShadow: C.cardShadow }}>
               <div style={{ fontSize: 11, fontWeight: 700, letterSpacing: '0.1em', textTransform: 'uppercase', color: C.faint, marginBottom: 10 }}>✓ Deadline Passed</div>
@@ -400,13 +359,13 @@ export default function App() {
           <h2 style={h2Style}>What Is 33 CFR Part 101, Subpart F?</h2>
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(250px, 1fr))', gap: 40, marginTop: 48 }}>
             {[
-              { label: 'The Rule', body: 'On July 16, 2025, the USCG Cybersecurity Final Rule added Subpart F to 33 CFR Part 101, requiring all MTSA-regulated facilities to implement mandatory cybersecurity measures. This converted previously voluntary NVIC 01-20 guidance into enforceable federal regulation.' },
-              { label: 'Who It Applies To', body: 'Approximately 3,200 MTSA-regulated facilities nationwide, including petroleum terminals, chemical plants, LNG terminals, cruise terminals, container terminals, and all other facilities regulated under 33 CFR Parts 105, 106, 126, 127, and 154.' },
-              { label: 'What Changed', body: 'Cybersecurity went from voluntary guidance (NVIC 01-20) to mandatory, enforceable regulation with USCG inspection authority and civil penalty exposure. Non-compliance is a federal violation, not an administrative oversight.' },
-            ].map((col, i) => (
+              { l: 'The Rule',        b: 'On July 16, 2025, the USCG Cybersecurity Final Rule added Subpart F to 33 CFR Part 101, requiring all MTSA-regulated facilities to implement mandatory cybersecurity measures. This converted previously voluntary NVIC 01-20 guidance into enforceable federal regulation.' },
+              { l: 'Who It Applies To', b: 'Approximately 3,200 MTSA-regulated facilities nationwide, including petroleum terminals, chemical plants, LNG terminals, cruise terminals, container terminals, and all other facilities regulated under 33 CFR Parts 105, 106, 126, 127, and 154.' },
+              { l: 'What Changed',    b: 'Cybersecurity went from voluntary guidance (NVIC 01-20) to mandatory, enforceable regulation with USCG inspection authority and civil penalty exposure. Non-compliance is a federal violation, not an administrative oversight.' },
+            ].map((c, i) => (
               <div key={i}>
-                <div style={{ fontSize: 12, fontWeight: 700, color: C.muted, textTransform: 'uppercase', letterSpacing: '0.1em', marginBottom: 12 }}>{col.label}</div>
-                <p style={mutedText}>{col.body}</p>
+                <div style={{ fontSize: 12, fontWeight: 700, color: C.muted, textTransform: 'uppercase', letterSpacing: '0.1em', marginBottom: 12 }}>{c.l}</div>
+                <p style={mutedText}>{c.b}</p>
               </div>
             ))}
           </div>
@@ -414,7 +373,7 @@ export default function App() {
       </section>
 
       {/* ══════════════════════════════════════════
-          3. THE TWO DEADLINES
+          3. DEADLINES
       ══════════════════════════════════════════ */}
       <section id="deadlines" style={{ background: C.bg, borderBottom: `1px solid ${C.border}`, padding: '80px 32px' }}>
         <div style={{ maxWidth: 860, margin: '0 auto' }}>
@@ -441,9 +400,7 @@ export default function App() {
               <div>
                 <h3 style={{ fontSize: 20, fontWeight: 700, color: C.heading, margin: '0 0 10px' }}>Cybersecurity Plan Submission — §101.640</h3>
                 <p style={{ ...mutedText, margin: '0 0 16px' }}>Every MTSA-regulated facility must submit a USCG-approved Facility Cybersecurity Plan. A realistic buildout — completing the assessment, drafting the plan, and clearing the USCG review cycle — takes 12 to 18 months.</p>
-                <div style={{ background: C.amberLight, border: `1px solid ${C.amberBorder}`, borderRadius: 8, padding: '12px 16px', fontSize: 15, color: C.amber, lineHeight: 1.65, fontWeight: 500 }}>
-                  Facilities that haven't begun their Cybersecurity Assessment are running out of planning runway. The clock started July 2025.
-                </div>
+                <div style={{ background: C.amberLight, border: `1px solid ${C.amberBorder}`, borderRadius: 8, padding: '12px 16px', fontSize: 15, color: C.amber, lineHeight: 1.65, fontWeight: 500 }}>Facilities that haven't begun their Cybersecurity Assessment are running out of planning runway. The clock started July 2025.</div>
               </div>
             </div>
           </div>
@@ -461,7 +418,7 @@ export default function App() {
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(270px, 1fr))', gap: 12 }}>
             {PLAN_SECTIONS.map((s, i) => (
               <article key={i} style={{ background: C.bgCard, border: `1px solid ${C.border}`, borderRadius: 10, padding: '24px 26px', boxShadow: C.cardShadow }}>
-                <div style={{ fontSize: 12, color: C.navyAccent, fontFamily: 'ui-monospace, Consolas, monospace', fontWeight: 700, marginBottom: 10, letterSpacing: '0.04em', background: C.navyBadge, display: 'inline-block', padding: '3px 8px', borderRadius: 4 }}>{s.ref}</div>
+                <div style={{ fontSize: 12, color: C.navyAccent, fontFamily: 'ui-monospace,Consolas,monospace', fontWeight: 700, marginBottom: 10, background: C.navyBadge, display: 'inline-block', padding: '3px 8px', borderRadius: 4 }}>{s.ref}</div>
                 <h3 style={{ fontSize: 17, fontWeight: 700, color: C.heading, margin: '10px 0 8px', lineHeight: 1.3 }}>{s.title}</h3>
                 <p style={{ fontSize: 15, color: C.muted, lineHeight: 1.7, margin: 0 }}>{s.body}</p>
               </article>
@@ -471,7 +428,7 @@ export default function App() {
       </section>
 
       {/* ══════════════════════════════════════════
-          5. KEY REGULATORY REFERENCES
+          5. REFERENCES
       ══════════════════════════════════════════ */}
       <section id="references" style={{ background: C.bg, borderBottom: `1px solid ${C.border}`, padding: '80px 32px' }}>
         <div style={{ maxWidth: 860, margin: '0 auto' }}>
@@ -493,60 +450,40 @@ export default function App() {
       </section>
 
       {/* ══════════════════════════════════════════
-          6. TRAINING REQUIREMENTS
+          6. TRAINING
       ══════════════════════════════════════════ */}
       <section id="training" style={{ background: C.bgAlt, borderBottom: `1px solid ${C.border}`, padding: '80px 32px' }}>
         <div style={{ maxWidth: 1040, margin: '0 auto' }}>
           <div style={sectionLabel}>§101.650 — CG-5PC Policy Letter 01-25</div>
           <h2 style={h2Style}>Cybersecurity Training Requirements Under §101.650</h2>
           <p style={{ ...mutedText, margin: '0 0 48px' }}>Who needs training, what topics, and by when.</p>
-
-          {/* Responsive table wrapper */}
           <div style={{ overflowX: 'auto', WebkitOverflowScrolling: 'touch', borderRadius: 10, border: `1px solid ${C.border}`, boxShadow: C.cardShadow }}>
             <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: 14, minWidth: 760 }}>
               <thead>
                 <tr style={{ background: C.bg, borderBottom: `2px solid ${C.borderMid}` }}>
-                  {['Training Requirement', 'All Personnel', 'Key Personnel', 'Untrained Personnel', 'Compliance Date'].map((h, i) => (
-                    <th key={i} style={{
-                      padding: '12px 16px', textAlign: 'left',
-                      fontSize: 12, fontWeight: 700, color: C.muted,
-                      textTransform: 'uppercase', letterSpacing: '0.08em',
-                      whiteSpace: 'nowrap',
-                    }}>{h}</th>
+                  {['Training Requirement','All Personnel','Key Personnel','Untrained Personnel','Compliance Date'].map((h, i) => (
+                    <th key={i} style={{ padding: '12px 16px', textAlign: 'left', fontSize: 12, fontWeight: 700, color: C.muted, textTransform: 'uppercase', letterSpacing: '0.08em', whiteSpace: 'nowrap' }}>{h}</th>
                   ))}
                 </tr>
               </thead>
               <tbody>
                 {TRAINING_ROWS.map((row, i) => (
-                  <tr key={i} style={{
-                    background: row.passed
-                      ? 'rgba(210,153,34,0.04)'
-                      : (i % 2 === 0 ? C.bgCard : C.bg),
-                    borderBottom: `1px solid ${C.border}`,
-                  }}>
+                  <tr key={i} style={{ background: row.passed ? 'rgba(210,153,34,0.04)' : (i % 2 === 0 ? C.bgCard : C.bg), borderBottom: `1px solid ${C.border}` }}>
                     <td style={{ padding: '14px 16px', color: C.body, lineHeight: 1.5, fontWeight: 500, maxWidth: 280 }}>{row.req}</td>
-                    <td style={{ padding: '14px 16px', color: row.all === 'Yes' ? '#3fb950' : row.all.startsWith('Deferred') ? C.muted : C.body, fontWeight: row.all === 'Yes' ? 600 : 400, whiteSpace: row.all.startsWith('Deferred') ? 'normal' : 'nowrap' }}>{row.all}</td>
-                    <td style={{ padding: '14px 16px', color: row.key === 'Yes' ? '#3fb950' : row.key.startsWith('Deferred') ? C.muted : C.body, fontWeight: row.key === 'Yes' ? 600 : 400, whiteSpace: row.key.startsWith('Deferred') ? 'normal' : 'nowrap' }}>{row.key}</td>
-                    <td style={{ padding: '14px 16px' }}>
-                      <span style={{ background: 'rgba(218,54,51,0.12)', border: '1px solid rgba(218,54,51,0.3)', color: '#f85149', fontSize: 11, fontWeight: 700, letterSpacing: '0.06em', padding: '3px 8px', borderRadius: 4, whiteSpace: 'nowrap' }}>{row.untrained}</span>
-                    </td>
+                    <td style={{ padding: '14px 16px', color: row.all === 'Yes' ? C.green : C.muted, fontWeight: row.all === 'Yes' ? 600 : 400 }}>{row.all}</td>
+                    <td style={{ padding: '14px 16px', color: row.key === 'Yes' ? C.green : C.muted, fontWeight: row.key === 'Yes' ? 600 : 400 }}>{row.key}</td>
+                    <td style={{ padding: '14px 16px' }}><span style={{ background: C.redLight, border: `1px solid ${C.redBorder}`, color: '#f85149', fontSize: 11, fontWeight: 700, letterSpacing: '0.06em', padding: '3px 8px', borderRadius: 4, whiteSpace: 'nowrap' }}>{row.untrained}</span></td>
                     <td style={{ padding: '14px 16px', whiteSpace: 'nowrap' }}>
-                      {row.passed ? (
-                        <span style={{ display: 'inline-flex', alignItems: 'center', gap: 6, color: C.amber, fontSize: 13, fontWeight: 600 }}>
-                          <span style={{ width: 7, height: 7, borderRadius: '50%', background: C.amber, display: 'inline-block', flexShrink: 0 }} />
-                          {row.deadline} — PASSED
-                        </span>
-                      ) : (
-                        <span style={{ color: C.muted, fontSize: 13 }}>{row.deadline}</span>
-                      )}
+                      {row.passed
+                        ? <span style={{ display: 'inline-flex', alignItems: 'center', gap: 6, color: C.amber, fontSize: 13, fontWeight: 600 }}><span style={{ width: 7, height: 7, borderRadius: '50%', background: C.amber, display: 'inline-block' }} />{row.deadline} — PASSED</span>
+                        : <span style={{ color: C.muted, fontSize: 13 }}>{row.deadline}</span>
+                      }
                     </td>
                   </tr>
                 ))}
               </tbody>
             </table>
           </div>
-
-          {/* Key notes */}
           <div style={{ marginTop: 32, display: 'flex', flexDirection: 'column', gap: 10 }}>
             {[
               '"Key Personnel" are determined by the owner/operator but generally include: company leadership, CSO, FSO, personnel with elevated system access or admin privileges, designated CySO, and OT engineers/operators/technicians with elevated access.',
@@ -573,36 +510,18 @@ export default function App() {
           <div style={sectionLabel}>NVIC 02-24 — February 21, 2024</div>
           <h2 style={h2Style}>Cyber Incident Reporting Requirements</h2>
           <p style={{ ...mutedText, margin: '0 0 48px' }}>Know what to report, to whom, and when.</p>
-
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(420px, 1fr))', gap: 16, marginBottom: 32 }}>
             {INCIDENT_CARDS.map((card, i) => (
-              <article key={i} style={{
-                background: card.colorBg, border: `1px solid ${card.colorBorder}`,
-                borderTop: `3px solid ${card.color}`,
-                borderRadius: 10, padding: '24px 26px', boxShadow: C.cardShadow,
-              }}>
+              <article key={i} style={{ background: card.colorBg, border: `1px solid ${card.colorBorder}`, borderTop: `3px solid ${card.color}`, borderRadius: 10, padding: '24px 26px', boxShadow: C.cardShadow }}>
                 <div style={{ fontSize: 11, fontWeight: 700, letterSpacing: '0.1em', textTransform: 'uppercase', color: card.color, marginBottom: 6 }}>{card.scope}</div>
                 <h3 style={{ fontSize: 19, fontWeight: 700, color: C.heading, margin: '0 0 14px' }}>{card.title}</h3>
-
                 <div style={{ marginBottom: 12 }}>
                   <div style={{ fontSize: 11, fontWeight: 700, color: C.faint, textTransform: 'uppercase', letterSpacing: '0.08em', marginBottom: 4 }}>Definition</div>
                   <p style={{ fontSize: 14, color: C.muted, lineHeight: 1.65, margin: 0 }}>{card.def}</p>
                 </div>
-
-                {card.examples && (
-                  <div style={{ marginBottom: 12 }}>
-                    <div style={{ fontSize: 11, fontWeight: 700, color: C.faint, textTransform: 'uppercase', letterSpacing: '0.08em', marginBottom: 4 }}>Examples</div>
-                    <p style={{ fontSize: 14, color: C.muted, lineHeight: 1.65, margin: 0 }}>{card.examples}</p>
-                  </div>
-                )}
-
-                {card.note && (
-                  <div style={{ marginBottom: 12 }}>
-                    <div style={{ fontSize: 11, fontWeight: 700, color: C.faint, textTransform: 'uppercase', letterSpacing: '0.08em', marginBottom: 4 }}>Note</div>
-                    <p style={{ fontSize: 14, color: C.muted, lineHeight: 1.65, margin: 0 }}>{card.note}</p>
-                  </div>
-                )}
-
+                {card.examples && <div style={{ marginBottom: 12 }}><div style={{ fontSize: 11, fontWeight: 700, color: C.faint, textTransform: 'uppercase', letterSpacing: '0.08em', marginBottom: 4 }}>Examples</div><p style={{ fontSize: 14, color: C.muted, lineHeight: 1.65, margin: 0 }}>{card.examples}</p></div>}
+                {card.when    && <div style={{ marginBottom: 12 }}><div style={{ fontSize: 11, fontWeight: 700, color: C.faint, textTransform: 'uppercase', letterSpacing: '0.08em', marginBottom: 4 }}>When to Report</div><p style={{ fontSize: 14, color: C.muted, lineHeight: 1.65, margin: 0 }}>{card.when}</p></div>}
+                {card.note    && <div style={{ marginBottom: 12 }}><div style={{ fontSize: 11, fontWeight: 700, color: C.faint, textTransform: 'uppercase', letterSpacing: '0.08em', marginBottom: 4 }}>Note</div><p style={{ fontSize: 14, color: C.muted, lineHeight: 1.65, margin: 0 }}>{card.note}</p></div>}
                 <div style={{ background: 'rgba(0,0,0,0.2)', borderRadius: 6, padding: '10px 14px', marginTop: 4 }}>
                   <div style={{ fontSize: 11, fontWeight: 700, color: card.color, textTransform: 'uppercase', letterSpacing: '0.08em', marginBottom: 4 }}>Report To</div>
                   <p style={{ fontSize: 14, color: C.body, fontWeight: 500, margin: 0, lineHeight: 1.5 }}>{card.reportTo}</p>
@@ -610,24 +529,18 @@ export default function App() {
               </article>
             ))}
           </div>
-
-          {/* Emergency contacts callout */}
-          <div style={{ background: C.bgCard, border: `1px solid ${C.borderMid}`, borderRadius: 10, padding: '24px 28px', display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(260px, 1fr))', gap: 24 }}>
-            <div>
-              <div style={{ fontSize: 12, fontWeight: 700, color: C.navyAccent, textTransform: 'uppercase', letterSpacing: '0.1em', marginBottom: 8 }}>CGCYBER 24/7 Watch</div>
-              <p style={{ fontSize: 16, color: C.heading, fontWeight: 600, margin: '0 0 4px' }}>(202) 372-2904</p>
-              <p style={{ fontSize: 15, color: C.muted, margin: 0 }}>CyberWatch@uscg.mil</p>
-            </div>
-            <div>
-              <div style={{ fontSize: 12, fontWeight: 700, color: C.navyAccent, textTransform: 'uppercase', letterSpacing: '0.1em', marginBottom: 8 }}>CISA Central</div>
-              <p style={{ fontSize: 16, color: C.heading, fontWeight: 600, margin: '0 0 4px' }}>(888) 282-0870</p>
-              <p style={{ fontSize: 15, color: C.muted, margin: 0 }}>report@cisa.gov</p>
-            </div>
-            <div>
-              <div style={{ fontSize: 12, fontWeight: 700, color: C.navyAccent, textTransform: 'uppercase', letterSpacing: '0.1em', marginBottom: 8 }}>NRC (24/7)</div>
-              <p style={{ fontSize: 16, color: C.heading, fontWeight: 600, margin: '0 0 4px' }}>1-800-424-8802</p>
-              <p style={{ fontSize: 15, color: C.muted, margin: 0 }}>Required for BOS and Suspicious Activity</p>
-            </div>
+          <div style={{ background: C.bgCard, border: `1px solid ${C.borderMid}`, borderRadius: 10, padding: '24px 28px', display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))', gap: 24 }}>
+            {[
+              { l: 'CGCYBER 24/7 Watch',   n: '(202) 372-2904',     s: 'CyberWatch@uscg.mil' },
+              { l: 'CISA Central',          n: '(888) 282-0870',     s: 'report@cisa.gov' },
+              { l: 'NRC (24/7)',            n: '1-800-424-8802',     s: 'Required for BOS and Suspicious Activity' },
+            ].map((c, i) => (
+              <div key={i}>
+                <div style={{ fontSize: 12, fontWeight: 700, color: C.navyAccent, textTransform: 'uppercase', letterSpacing: '0.1em', marginBottom: 8 }}>{c.l}</div>
+                <p style={{ fontSize: 16, color: C.heading, fontWeight: 600, margin: '0 0 4px' }}>{c.n}</p>
+                <p style={{ fontSize: 14, color: C.muted, margin: 0 }}>{c.s}</p>
+              </div>
+            ))}
           </div>
           <p style={{ fontSize: 12, color: C.faint, marginTop: 16, fontStyle: 'italic' }}>Source: NVIC 02-24, February 21, 2024</p>
         </div>
@@ -641,50 +554,43 @@ export default function App() {
           <div style={sectionLabel}>NVIC 01-20 FAQs — Rewritten for Clarity</div>
           <h2 style={h2Style}>Frequently Asked Questions</h2>
           <p style={{ ...mutedText, margin: '0 0 48px' }}>Answers from USCG guidance — rewritten in plain English.</p>
-
           {FAQ_ITEMS.map((item, i) => (
-            <FaqItem
-              key={i}
-              q={item.q}
-              a={item.a}
-              open={openFaq === i}
-              onToggle={() => setOpenFaq(openFaq === i ? null : i)}
-            />
+            <FaqItem key={i} q={item.q} a={item.a} open={openFaq === i} onToggle={() => setOpenFaq(openFaq === i ? null : i)} />
           ))}
-
-          <p style={{ fontSize: 12, color: C.faint, marginTop: 24, lineHeight: 1.7, fontStyle: 'italic' }}>
-            Based on NVIC 01-20 FAQs, updated April 29, 2022. Answers have been simplified for clarity — refer to official USCG guidance for authoritative text.
-          </p>
+          <p style={{ fontSize: 12, color: C.faint, marginTop: 24, lineHeight: 1.7, fontStyle: 'italic' }}>Based on NVIC 01-20 FAQs, updated April 29, 2022. Answers have been simplified for clarity — refer to official USCG guidance for authoritative text.</p>
         </div>
       </section>
 
       {/* ══════════════════════════════════════════
-          9. NVIC 01-20 CHECKLIST
+          9. READINESS SCORE
       ══════════════════════════════════════════ */}
-      <section id="checklist" style={{ background: C.bg, borderBottom: `1px solid ${C.border}`, padding: '80px 32px' }}>
+      <section id="readiness" style={{ background: C.bg, borderBottom: `1px solid ${C.border}`, padding: '80px 32px' }}>
+        <div style={{ maxWidth: 800, margin: '0 auto' }}>
+          <div style={sectionLabel}>Self-Assessment Tool</div>
+          <h2 style={h2Style}>How Ready Is Your Facility?</h2>
+          <p style={{ ...mutedText, margin: '0 0 48px' }}>Five questions. Two minutes. See where you stand on Subpart F.</p>
+          <ReadinessQuiz />
+        </div>
+      </section>
+
+      {/* ══════════════════════════════════════════
+          10. CHECKLIST
+      ══════════════════════════════════════════ */}
+      <section id="checklist" style={{ background: C.bgAlt, borderBottom: `1px solid ${C.border}`, padding: '80px 32px' }}>
         <div style={{ maxWidth: 900, margin: '0 auto' }}>
           <div style={sectionLabel}>NVIC 01-20 — Enclosure 1 — February 26, 2020</div>
           <h2 style={h2Style}>NVIC 01-20 Cyber Compliance Checklist</h2>
           <p style={{ ...mutedText, margin: '0 0 48px' }}>What your FSP cyber annex should address — mapped to 33 CFR 105/106.</p>
-
           <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
             {CHECKLIST_ITEMS.map((item, i) => (
-              <div key={i} style={{
-                background: C.bgCard, border: `1px solid ${C.border}`,
-                borderRadius: 8, padding: '18px 22px',
-                display: 'flex', gap: 16, alignItems: 'flex-start',
-              }}>
-                <div style={{
-                  width: 22, height: 22, borderRadius: 5, flexShrink: 0, marginTop: 2,
-                  border: `2px solid ${C.borderMid}`, background: C.bg,
-                  display: 'flex', alignItems: 'center', justifyContent: 'center',
-                }}>
+              <div key={i} style={{ background: C.bgCard, border: `1px solid ${C.border}`, borderRadius: 8, padding: '18px 22px', display: 'flex', gap: 16, alignItems: 'flex-start' }}>
+                <div style={{ width: 22, height: 22, borderRadius: 5, flexShrink: 0, marginTop: 2, border: `2px solid ${C.borderMid}`, background: C.bg, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
                   <div style={{ width: 8, height: 8, borderRadius: 2, background: C.borderMid }} />
                 </div>
                 <div style={{ flex: 1 }}>
                   <div style={{ display: 'flex', flexWrap: 'wrap', gap: 8, alignItems: 'center', marginBottom: 6 }}>
                     <span style={{ fontSize: 16, fontWeight: 700, color: C.heading }}>{item.title}</span>
-                    <span style={{ fontSize: 11, color: C.navyAccent, fontFamily: 'ui-monospace, Consolas, monospace', fontWeight: 700, background: C.navyBadge, padding: '2px 7px', borderRadius: 3 }}>{item.ref}</span>
+                    <span style={{ fontSize: 11, color: C.navyAccent, fontFamily: 'ui-monospace,Consolas,monospace', fontWeight: 700, background: C.navyBadge, padding: '2px 7px', borderRadius: 3 }}>{item.ref}</span>
                   </div>
                   <p style={{ fontSize: 14, color: C.muted, lineHeight: 1.65, margin: 0 }}>{item.body}</p>
                 </div>
@@ -696,14 +602,114 @@ export default function App() {
       </section>
 
       {/* ══════════════════════════════════════════
+          11. COST COMPARISON
+      ══════════════════════════════════════════ */}
+      <section id="cost" style={{ background: C.bg, borderBottom: `1px solid ${C.border}`, padding: '80px 32px' }}>
+        <div style={{ maxWidth: 1000, margin: '0 auto' }}>
+          <div style={sectionLabel}>ROI Analysis</div>
+          <h2 style={h2Style}>What Subpart F Compliance Actually Costs</h2>
+          <p style={{ ...mutedText, margin: '0 0 48px' }}>Three ways to get through the checklist above. One costs 95% less.</p>
+
+          {/* Three columns */}
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: 16, alignItems: 'stretch', marginBottom: 32 }}>
+
+            {/* DIY */}
+            <div style={{ background: C.bgCard, border: `1px solid ${C.border}`, borderRadius: 12, padding: '28px 26px', display: 'flex', flexDirection: 'column', gap: 16, boxShadow: C.cardShadow }}>
+              <div>
+                <div style={{ fontSize: 12, fontWeight: 700, color: C.faint, textTransform: 'uppercase', letterSpacing: '0.1em', marginBottom: 8 }}>Option 1</div>
+                <h3 style={{ fontSize: 20, fontWeight: 700, color: C.heading, margin: '0 0 4px' }}>DIY / Excel</h3>
+                <div style={{ fontSize: 14, color: C.muted }}>$0 software, but 160+ hours/year of your time</div>
+              </div>
+              <div style={{ background: C.bg, borderRadius: 8, padding: '14px 16px' }}>
+                <div style={{ fontSize: 12, fontWeight: 700, color: C.faint, textTransform: 'uppercase', letterSpacing: '0.08em', marginBottom: 4 }}>True Annual Cost</div>
+                <div style={{ fontSize: 22, fontWeight: 800, color: C.body }}>$13,600<span style={{ fontSize: 13, color: C.muted, fontWeight: 400 }}>/yr in labor</span></div>
+                <div style={{ fontSize: 12, color: C.faint, marginTop: 2 }}>160 hrs × $85/hr FSO salary</div>
+              </div>
+              <div>
+                <div style={{ fontSize: 12, fontWeight: 700, color: C.faint, textTransform: 'uppercase', letterSpacing: '0.08em', marginBottom: 6 }}>What You Get</div>
+                <p style={{ fontSize: 14, color: C.muted, lineHeight: 1.65, margin: 0 }}>Spreadsheets, manual cross-referencing, no audit trail, hope you don't miss anything.</p>
+              </div>
+              <div>
+                <div style={{ fontSize: 12, fontWeight: 700, color: C.faint, textTransform: 'uppercase', letterSpacing: '0.08em', marginBottom: 6 }}>Risk</div>
+                <p style={{ fontSize: 14, color: C.muted, lineHeight: 1.65, margin: 0 }}>COTP finds gaps you missed → fines, remediation, reputation damage.</p>
+              </div>
+              <div style={{ marginTop: 'auto', paddingTop: 8 }}>
+                <span style={{ display: 'inline-block', background: C.bg, border: `1px solid ${C.borderMid}`, color: C.muted, fontSize: 12, fontWeight: 700, padding: '5px 12px', borderRadius: 4, letterSpacing: '0.06em', textTransform: 'uppercase' }}>Free but expensive</span>
+              </div>
+            </div>
+
+            {/* Consultant */}
+            <div style={{ background: C.bgCard, border: `1px solid ${C.border}`, borderRadius: 12, padding: '28px 26px', display: 'flex', flexDirection: 'column', gap: 16, boxShadow: C.cardShadow }}>
+              <div>
+                <div style={{ fontSize: 12, fontWeight: 700, color: C.faint, textTransform: 'uppercase', letterSpacing: '0.1em', marginBottom: 8 }}>Option 2</div>
+                <h3 style={{ fontSize: 20, fontWeight: 700, color: C.heading, margin: '0 0 4px' }}>Hire a Consultant</h3>
+                <div style={{ fontSize: 14, color: C.muted }}>$25,000 – $75,000 per facility per year</div>
+              </div>
+              <div style={{ background: C.bg, borderRadius: 8, padding: '14px 16px' }}>
+                <div style={{ fontSize: 12, fontWeight: 700, color: C.faint, textTransform: 'uppercase', letterSpacing: '0.08em', marginBottom: 4 }}>Annual Cost</div>
+                <div style={{ fontSize: 22, fontWeight: 800, color: C.body }}>$25k–$75k<span style={{ fontSize: 13, color: C.muted, fontWeight: 400 }}>/facility/yr</span></div>
+              </div>
+              <div>
+                <div style={{ fontSize: 12, fontWeight: 700, color: C.faint, textTransform: 'uppercase', letterSpacing: '0.08em', marginBottom: 6 }}>What You Get</div>
+                <p style={{ fontSize: 14, color: C.muted, lineHeight: 1.65, margin: 0 }}>Expert walks your facility, writes your FSA/FSP cyber annex, manages COTP submission.</p>
+              </div>
+              <div>
+                <div style={{ fontSize: 12, fontWeight: 700, color: C.faint, textTransform: 'uppercase', letterSpacing: '0.08em', marginBottom: 6 }}>Limitation</div>
+                <p style={{ fontSize: 14, color: C.muted, lineHeight: 1.65, margin: 0 }}>You're renting expertise. When the engagement ends, you're back to spreadsheets.</p>
+              </div>
+              <div style={{ marginTop: 'auto', paddingTop: 8 }}>
+                <span style={{ display: 'inline-block', background: C.bg, border: `1px solid ${C.borderMid}`, color: C.muted, fontSize: 12, fontWeight: 700, padding: '5px 12px', borderRadius: 4, letterSpacing: '0.06em', textTransform: 'uppercase' }}>Expert but expensive</span>
+              </div>
+            </div>
+
+            {/* HELM — highlighted column */}
+            <div style={{ background: C.bgCard, border: `2px solid ${C.amber}`, borderRadius: 12, padding: '28px 26px', display: 'flex', flexDirection: 'column', gap: 16, boxShadow: `0 0 0 1px ${C.amberBorder}, ${C.cardShadow}`, position: 'relative' }}>
+              <div style={{ position: 'absolute', top: -12, left: 24, background: C.amber, color: '#fff', fontSize: 11, fontWeight: 800, letterSpacing: '0.1em', textTransform: 'uppercase', padding: '4px 14px', borderRadius: 4 }}>Recommended</div>
+              <div>
+                <div style={{ fontSize: 12, fontWeight: 700, color: C.amber, textTransform: 'uppercase', letterSpacing: '0.1em', marginBottom: 8 }}>Option 3</div>
+                <h3 style={{ fontSize: 20, fontWeight: 700, color: C.heading, margin: '0 0 4px' }}>HELM</h3>
+                <div style={{ fontSize: 14, color: C.muted }}>$99/month · built for MTSA facilities</div>
+              </div>
+              <div style={{ background: C.amberLight, border: `1px solid ${C.amberBorder}`, borderRadius: 8, padding: '14px 16px' }}>
+                <div style={{ fontSize: 12, fontWeight: 700, color: C.amber, textTransform: 'uppercase', letterSpacing: '0.08em', marginBottom: 4 }}>Annual Cost</div>
+                <div style={{ fontSize: 22, fontWeight: 800, color: C.amber }}>$1,188<span style={{ fontSize: 13, color: C.muted, fontWeight: 400 }}>/facility/yr</span></div>
+                <div style={{ fontSize: 12, color: C.faint, marginTop: 2 }}>vs. $25,000+ consultant — 95% less</div>
+              </div>
+              <div>
+                <div style={{ fontSize: 12, fontWeight: 700, color: C.faint, textTransform: 'uppercase', letterSpacing: '0.08em', marginBottom: 6 }}>What You Get</div>
+                <p style={{ fontSize: 14, color: C.muted, lineHeight: 1.65, margin: 0 }}>Automated compliance tracking for all 14 checklist items above. Gap analysis, training tracker, drill logging, incident reporting, inspection package PDF, AI compliance assistant — built specifically for MTSA facilities.</p>
+              </div>
+              <div>
+                <div style={{ fontSize: 12, fontWeight: 700, color: C.faint, textTransform: 'uppercase', letterSpacing: '0.08em', marginBottom: 6 }}>Best For</div>
+                <p style={{ fontSize: 14, color: C.muted, lineHeight: 1.65, margin: 0 }}>FSOs who want to own their compliance posture without paying consultant rates for spreadsheet work.</p>
+              </div>
+              <div style={{ marginTop: 'auto', paddingTop: 8, display: 'flex', flexDirection: 'column', gap: 10 }}>
+                <span style={{ display: 'inline-block', background: C.amberLight, border: `1px solid ${C.amberBorder}`, color: C.amber, fontSize: 12, fontWeight: 700, padding: '5px 12px', borderRadius: 4, letterSpacing: '0.06em', textTransform: 'uppercase' }}>Complete platform, 95% less</span>
+                <a href="https://helmport.com/signup" target="_blank" rel="noopener noreferrer"
+                  style={{ display: 'block', textAlign: 'center', background: C.amber, color: '#fff', textDecoration: 'none', padding: '12px 20px', borderRadius: 8, fontSize: 15, fontWeight: 700 }}>
+                  Start Free Trial → helmport.com/signup
+                </a>
+              </div>
+            </div>
+
+          </div>
+
+          {/* Savings Calculator embedded here */}
+          <SavingsCalculator />
+
+          <p style={{ fontSize: 14, color: C.faint, marginTop: 28, lineHeight: 1.75, fontStyle: 'italic', maxWidth: 780 }}>
+            HELM doesn't replace on-site expertise. If your facility needs a consultant for physical walkthroughs or complex OT assessments, HELM makes that engagement faster and cheaper by handling the documentation, tracking, and reporting.
+          </p>
+        </div>
+      </section>
+
+      {/* ══════════════════════════════════════════
           WHO WE ARE
       ══════════════════════════════════════════ */}
       <section style={{ background: C.bgAlt, borderBottom: `1px solid ${C.border}`, padding: '80px 32px' }}>
         <div style={{ maxWidth: 640, margin: '0 auto', textAlign: 'center' }}>
           <div style={{ fontSize: 22, fontWeight: 800, color: C.heading, marginBottom: 16 }}>⚓ HELM</div>
-          <p style={{ ...mutedText, margin: '0 0 32px' }}>
-            HELM helps Facility Security Officers at MTSA-regulated facilities manage both physical security and cybersecurity compliance in one platform — from FSP tracking to Subpart F plan development.
-          </p>
+          <p style={{ ...mutedText, margin: '0 0 32px' }}>HELM helps Facility Security Officers at MTSA-regulated facilities manage both physical security and cybersecurity compliance in one platform — from FSP tracking to Subpart F plan development.</p>
           <a href="https://helmport.com" target="_blank" rel="noopener noreferrer"
             style={{ display: 'inline-block', background: C.bgCard, border: `1px solid ${C.borderMid}`, color: C.heading, textDecoration: 'none', padding: '12px 28px', borderRadius: 8, fontSize: 15, fontWeight: 600 }}>
             Visit helmport.com →
@@ -711,12 +717,10 @@ export default function App() {
         </div>
       </section>
 
-      {/* ── Footer ───────────────────────────────────────── */}
+      {/* ── Footer ────────────────────────────────────────── */}
       <footer style={{ background: C.bgAlt, borderTop: `1px solid ${C.border}`, padding: '28px 32px' }}>
         <div style={{ maxWidth: 860, margin: '0 auto', display: 'flex', flexWrap: 'wrap', gap: 16, justifyContent: 'space-between', alignItems: 'center' }}>
-          <p style={{ fontSize: 13, color: C.faint, margin: 0, lineHeight: 1.6 }}>
-            This site is for informational purposes only and does not constitute legal advice.
-          </p>
+          <p style={{ fontSize: 13, color: C.faint, margin: 0, lineHeight: 1.6 }}>This site is for informational purposes only and does not constitute legal advice.</p>
           <div style={{ display: 'flex', gap: 20, alignItems: 'center', flexWrap: 'wrap' }}>
             <a href="mailto:joel@helmport.com" style={{ fontSize: 13, color: C.faint, textDecoration: 'none' }}>joel@helmport.com</a>
             <span style={{ fontSize: 13, color: C.faint }}>© 2026 HELM</span>
